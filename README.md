@@ -17,7 +17,7 @@ Depending on your system's configuration, you may need to run this command with 
 
 # Configuration #
 
-In order to communicate with Cisco UCS XMO API you will have to tell Knife the username, password and the IP address of the UCS Manager. The easiest way to accomplish this is to create some entries in your `knife.rb` file:
+In order to communicate with Cisco UCS XML API you will have to tell Knife the username, password and the IP address of the UCS Manager. The easiest way to accomplish this is to create some entries in your `knife.rb` file:
 
     knife[:ucsm_username]   = "Your UCSM username"
     knife[:ucsm_password] 	= "Your UCSM password"
