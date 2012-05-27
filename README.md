@@ -37,7 +37,7 @@ This plugin provides the following Knife subcommands. Specific command options c
 
 Examples:
 
-knife openstack ucs blades list
+knife ucs blades list
 -----------------------------
 
 List blade information:
