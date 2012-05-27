@@ -54,7 +54,20 @@ List blade information:
 	1/4  N20-B6620-1   580     1     4096        1         2            2      available     off  
 	->
 
+knife ucs org <create/delete>
+-----------------------------------
 
+Create and delete an org
+
+	-> knife ucs org create --org Eng1
+
+	Org: Eng1 status: created
+
+	-> knife ucs org delete --org Eng1
+
+	Org: Eng1 status: deleted
+
+	->
 
 # License #
 
