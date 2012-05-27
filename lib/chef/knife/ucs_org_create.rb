@@ -38,7 +38,7 @@ class Chef
         :short => "-O ORG",
         :long => "--org ORG",
         :description => "The sub organization",
-        :proc => Proc.new { |f| Chef::Config[:knife][:orgs] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
 
 
       def run
