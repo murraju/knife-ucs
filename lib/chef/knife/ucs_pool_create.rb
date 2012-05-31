@@ -29,6 +29,7 @@ class Chef
         attr_accessor :initial_sleep_delay
 
         option :pool,
+          :short => "-P POOL",
           :long => "--pool POOLTYPE",
           :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",
           :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
