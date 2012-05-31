@@ -23,7 +23,7 @@ class Chef
 
       include Knife::UCSBase
 
-      banner "knife ucs serviceprofile delete SERVICEPROFILE [SERVICEPROFILE] (options)"
+      banner "knife ucs serviceprofile delete (options)"
 
       def run
 
