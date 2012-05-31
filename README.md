@@ -35,39 +35,7 @@ If your knife.rb file will be checked into a SCM system (ie readable by others) 
 
 This plugin provides the following Knife subcommands. Specific command options can be found by invoking the subcommand with a `--help` flag
 
-Examples:
-
-knife ucs blades list
------------------------------
-
-List blade information:
-
-	-> knife ucs blades list
-	ID   Model         Serial  CPUs  Memory[MB]  Adaptors  EtnernetIfs  FCifs  Availability  Power
-	1/6  N20-B6620-1   582     1     4096        1         2            0      available     off  
-	1/2  N20-B6620-1   579     1     4096        1         2            2      available     off  
-	1/7  N20-B6620-1   583     1     4096        1         2            2      available     off  
-	1/8  N20-B6730-1   585     1     8192        1         0            0      unavailable   off  
-	1/1  N20-B6620-1   577     2     8192        1         3            0      unavailable   on   
-	1/5  N20-B6620-1   581     1     4096        1         2            2      available     off  
-	1/3  B230-BASE-M2  578     1     16384       1         2            0      available     off  
-	1/4  N20-B6620-1   580     1     4096        1         2            2      available     off  
-	->
-
-knife ucs org <create/delete>
------------------------------------
-
-Create and delete an org
-
-	-> knife ucs org create --org Eng1
-
-	Org: Eng1 status: created
-
-	-> knife ucs org delete --org Eng1
-
-	Org: Eng1 status: deleted
-
-	->
+Example usage can be found here -> https://github.com/murraju/knife-ucs/wiki
 
 # License #
 
