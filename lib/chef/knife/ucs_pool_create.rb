@@ -26,7 +26,17 @@ class Chef
       banner "knife ucs pool create (options)"
 
       def run
+        attr_accessor :initial_sleep_delay
 
+        option :pool,
+          :long => "--pool POOLTYPE",
+          :description => "UCS pool types <mac,uuid,wwpn,wwnn,management>",
+          :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
+
+        option :poolname,
+          :long => "--poolname POOLNAME",
+          :description => "The pool name",
+          :proc => Proc.new { |f| Chef::Config[:knife][:poolname] = f }
 
 
       end

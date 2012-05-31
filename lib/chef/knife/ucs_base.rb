@@ -63,7 +63,7 @@ class Chef
         end
       end
       
-      #Intialize Inventory and Provisioner objects
+      #Intialize objects
       def inventory
         ucs_inventory = UCSInventory.new
         @inventory ||= begin
