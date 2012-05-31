@@ -60,8 +60,8 @@ class Chef
           :description => "The IP Gateway address of a subnet",
           :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }
           
-        type = "#{Chef::Config[:knife][:pool]}"
-        case type
+        pool_type = "#{Chef::Config[:knife][:pool]}"
+        case pool_type
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],  }
         end
