@@ -75,6 +75,7 @@ class Chef
           xml_response = provisioner.create_management_ip_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
           xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |pool|
+            puts ''
             puts "Management IP Block from: #{ui.color("#{pool.attributes['from']}", :magenta)} to: #{ui.color("#{pool.attributes['to']}", :magenta)}" + 
                   " status: #{ui.color("#{pool.attributes['status']}", :green)}"
           end
