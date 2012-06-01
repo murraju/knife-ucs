@@ -25,6 +25,8 @@ class Chef
 
       banner "knife ucs pool create (options)"
       
+      attr_accessor :initial_sleep_delay
+      
       option :pool,
         :short => "-P POOL",
         :long => "--pool POOLTYPE",
@@ -64,7 +66,6 @@ class Chef
 
       def run
         $stdout.sync = true
-        attr_accessor :initial_sleep_delay
           
         pool_type = "#{Chef::Config[:knife][:pool]}"
         case pool_type
