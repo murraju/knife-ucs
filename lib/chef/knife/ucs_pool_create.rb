@@ -147,6 +147,25 @@ class Chef
           xml_doc.xpath("configConfMos").each do |wwpn|
              puts "#{wwpn.attributes['errorCode']} #{ui.color("#{wwpn.attributes['errorDescr']}", :red)}"
           end
+        
+        when 'uuid'
+          json =  { :uuid_pool_name => Chef::Config[:knife][:name], :uuid_from => Chef::Config[:knife][:start], 
+                    :uuid_to => Chef::Config[:knife][:end],         :org => Chef::Config[:knife][:org] }.to_json
+        
+          xml_response = provisioner.create_uuid_pool(json)
+          xml_doc = Nokogiri::XML(xml_response)
+          
+          xml_doc.xpath("configConfMos/outConfigs/pair/uuidpoolPool").each do |uuid|
+            puts ''
+            puts "UUID pool : #{ui.color("#{uuid.attributes['name']}", :magenta)}" + 
+                  " status: #{ui.color("#{uuid.attributes['status']}", :green)}"
+          end
+        
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |uuid|
+             puts "#{uuid.attributes['errorCode']} #{ui.color("#{uuid.attributes['errorDescr']}", :red)}"
+          end
+
 
         else
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
