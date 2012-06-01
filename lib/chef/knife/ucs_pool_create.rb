@@ -24,47 +24,47 @@ class Chef
       include Knife::UCSBase
 
       banner "knife ucs pool create (options)"
+      
+      option :pool_type,
+        :short => "-P POOL",
+        :long => "--pool POOLTYPE",
+        :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:pool_type] = f }
+
+      option :pool_name,
+        :short => "-N NAME",
+        :long => "--poolname POOLNAME",
+        :description => "The pool name",
+        :proc => Proc.new { |f| Chef::Config[:knife][:pool_name] = f }
+
+      option :start_range,
+        :short => "-S START",
+        :long => "--poolstart STARTRANGE",
+        :description => "Start of a pool range <IP, WWPN, WWNN, MAC>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:start_range] = f }
+
+      option :end_range,
+        :short => "-E END",
+        :long => "--poolend ENDRANGE",
+        :description => "End of a pool range <IP, WWPN, WWNN, MAC>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:end_range] = f }
+
+
+      option :subnet_mask,
+        :short => "-M MASK",
+        :long => "--subnetmask SUBNETMASK",
+        :description => "The subnet mask for an IP range",
+        :proc => Proc.new { |f| Chef::Config[:knife][:subnet_mask] = f }
+
+      option :gateway,
+        :short => "-G GATEWAY",
+        :long => "--gateway IPGATEWAY",
+        :description => "The IP Gateway address of a subnet",
+        :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }      
 
       def run
         $stdout.sync = true
         attr_accessor :initial_sleep_delay
-
-        option :pool_type,
-          :short => "-P POOL",
-          :long => "--pool POOLTYPE",
-          :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",
-          :proc => Proc.new { |f| Chef::Config[:knife][:pool_type] = f }
-
-        option :pool_name,
-          :short => "-N NAME",
-          :long => "--poolname POOLNAME",
-          :description => "The pool name",
-          :proc => Proc.new { |f| Chef::Config[:knife][:pool_name] = f }
-
-        option :start_range,
-          :short => "-S START",
-          :long => "--poolstart STARTRANGE",
-          :description => "Start of a pool range <IP, WWPN, WWNN, MAC>",
-          :proc => Proc.new { |f| Chef::Config[:knife][:start_range] = f }
-
-        option :end_range,
-          :short => "-E END",
-          :long => "--poolend ENDRANGE",
-          :description => "End of a pool range <IP, WWPN, WWNN, MAC>",
-          :proc => Proc.new { |f| Chef::Config[:knife][:end_range] = f }
-
-
-        option :subnet_mask,
-          :short => "-M MASK",
-          :long => "--subnetmask SUBNETMASK",
-          :description => "The subnet mask for an IP range",
-          :proc => Proc.new { |f| Chef::Config[:knife][:subnet_mask] = f }
-
-        option :gateway,
-          :short => "-G GATEWAY",
-          :long => "--gateway IPGATEWAY",
-          :description => "The IP Gateway address of a subnet",
-          :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }
           
         pool_type = "#{Chef::Config[:knife][:pool_type]}"
         case pool_type
