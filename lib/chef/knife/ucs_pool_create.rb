@@ -115,7 +115,7 @@ class Chef
           json =  { :wwnn_pool_name => Chef::Config[:knife][:name],  :wwnn_pool_start => Chef::Config[:knife][:start], 
                     :wwnn_pool_end => Chef::Config[:knife][:end],    :org => Chef::Config[:knife][:org] }.to_json
           
-          xml_response = provisioner.create_wwnn_pool(json)
+          puts provisioner.create_wwnn_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
   
           xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |wwnn|
