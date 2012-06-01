@@ -75,13 +75,13 @@ class Chef
           xml_response = provisioner.create_management_ip_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
           xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |pool|
-            puts "Management IP Block from: #{ui.color("#{org.attributes['from']}", :magenta)} to: #{ui.color("#{org.attributes['to']}", :magenta)}" + 
-                  " status: #{ui.color("#{org.attributes['status']}", :green)}"
+            puts "Management IP Block from: #{ui.color("#{pool.attributes['from']}", :magenta)} to: #{ui.color("#{pool.attributes['to']}", :magenta)}" + 
+                  " status: #{ui.color("#{pool.attributes['status']}", :green)}"
           end
 
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-          xml_doc.xpath("configConfMos").each do |org|
-             puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
+          xml_doc.xpath("configConfMos").each do |pool|
+             puts "#{pool.attributes['errorCode']} #{ui.color("#{pool.attributes['errorDescr']}", :red)}"
           end
 
         else
