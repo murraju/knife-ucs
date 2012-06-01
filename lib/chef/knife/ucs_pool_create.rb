@@ -63,7 +63,8 @@ class Chef
         pool_type = "#{Chef::Config[:knife][:pool]}"
         case pool_type
         when 'managementip'
-          json = { :start_ip => Chef::Config[:knife][:start],  }
+          json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
+                   :subnet_mask => Chef::Config[:knife][:mask], :gateway => Chef::Config[:knife][:gateway] }.to_json
         end
 
       end
