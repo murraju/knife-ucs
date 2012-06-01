@@ -137,14 +137,14 @@ class Chef
           puts provisioner.create_wwpn_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
           
-          xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwnn|
+          xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwpn|
             puts ''
-            puts "WWNN pool : #{ui.color("#{wwnn.attributes['name']}", :magenta)}" + 
-                  " status: #{ui.color("#{wwnn.attributes['status']}", :green)}"
+            puts "WWPN pool : #{ui.color("#{wwpn.attributes['name']}", :magenta)}" + 
+                  " status: #{ui.color("#{wwpn.attributes['status']}", :green)}"
           end
         
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-          xml_doc.xpath("configConfMos").each do |wwnn|
+          xml_doc.xpath("configConfMos").each do |wwpn|
              puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
           end
 
