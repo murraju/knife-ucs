@@ -113,7 +113,7 @@ class Chef
 
         when 'wwnn'
           json =  { :wwnn_name => Chef::Config[:knife][:name],  :wwnn_from => Chef::Config[:knife][:start], 
-                    :wwnn_to => Chef::Config[:knife][:end],    :org => Chef::Config[:knife][:org] }.to_json
+                    :wwnn_to => Chef::Config[:knife][:end],     :org => Chef::Config[:knife][:org] }.to_json
           
           xml_response = provisioner.create_wwnn_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
@@ -148,9 +148,9 @@ class Chef
              puts "#{wwpn.attributes['errorCode']} #{ui.color("#{wwpn.attributes['errorDescr']}", :red)}"
           end
 
-      else
-        puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
-      end
+        else
+          puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
+        end
 
       end
 
