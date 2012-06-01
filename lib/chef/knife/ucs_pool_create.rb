@@ -133,6 +133,28 @@ class Chef
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
         end
 
+      when 'wwpn'
+        json =  { :wwpn_name => Chef::Config[:knife][:name],  :wwpn_from => Chef::Config[:knife][:start], 
+                  :wwpn_to => Chef::Config[:knife][:end],     :org => Chef::Config[:knife][:org] }.to_json
+        
+        puts provisioner.create_wwpn_pool(json)
+        # xml_doc = Nokogiri::XML(xml_response)
+        #   
+        # xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwnn|
+        #   puts ''
+        #   puts "WWNN pool : #{ui.color("#{wwnn.attributes['name']}", :magenta)}" + 
+        #         " status: #{ui.color("#{wwnn.attributes['status']}", :green)}"
+        # end
+        # 
+        # #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+        # xml_doc.xpath("configConfMos").each do |wwnn|
+        #    puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
+        # end
+
+      else
+        puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
+      end
+
       end
 
     end
