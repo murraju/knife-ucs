@@ -97,7 +97,19 @@ class Chef
           json =  { :mac_pool_name => Chef::Config[:knife][:name], :mac_pool_start => Chef::Config[:knife][:start], 
                     :mac_pool_end => Chef::Config[:knife][:end],   :org => Chef::Config[:knife][:org] }.to_json
           
-          puts provisioner.create_mac_pool(json)
+          xml_response = provisioner.create_mac_pool(json)
+          xml_doc = Nokogiri::XML(xml_response)
+  
+          xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |macpool|
+            puts ''
+            puts "MAC address pool from: #{ui.color("#{macpool.attributes['from']}", :magenta)} to: #{ui.color("#{macpool.attributes['to']}", :magenta)}" + 
+                  " status: #{ui.color("#{macpool.attributes['status']}", :green)}"
+          end
+
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |macpool|
+             puts "#{macpool.attributes['errorCode']} #{ui.color("#{macpool.attributes['errorDescr']}", :red)}"
+          end          
 
         else
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
