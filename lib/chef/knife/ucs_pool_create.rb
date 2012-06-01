@@ -129,9 +129,6 @@ class Chef
              puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
           end
 
-        else
-          puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
-        end
 
         when 'wwpn'
           json =  { :wwpn_name => Chef::Config[:knife][:name],  :wwpn_from => Chef::Config[:knife][:start], 
