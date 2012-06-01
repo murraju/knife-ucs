@@ -112,22 +112,22 @@ class Chef
           end          
 
         when 'wwnn'
-          json =  { :wwnn_pool_name => Chef::Config[:knife][:name],  :wwnn_pool_start => Chef::Config[:knife][:start], 
-                    :wwnn_pool_end => Chef::Config[:knife][:end],    :org => Chef::Config[:knife][:org] }.to_json
+          json =  { :wwnn_name => Chef::Config[:knife][:name],  :wwnn_from => Chef::Config[:knife][:start], 
+                    :wwnn_to => Chef::Config[:knife][:end],    :org => Chef::Config[:knife][:org] }.to_json
           
           puts provisioner.create_wwnn_pool(json)
-          xml_doc = Nokogiri::XML(xml_response)
-  
-          xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |wwnn|
-            puts ''
-            puts "WWNN pool : #{ui.color("#{macpool.attributes['name']}", :magenta)}" + 
-                  " status: #{ui.color("#{macpool.attributes['status']}", :green)}"
-          end
-
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-          xml_doc.xpath("configConfMos").each do |wwnn|
-             puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
-          end
+          # xml_doc = Nokogiri::XML(xml_response)
+          #   
+          # xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |wwnn|
+          #   puts ''
+          #   puts "WWNN pool : #{ui.color("#{macpool.attributes['name']}", :magenta)}" + 
+          #         " status: #{ui.color("#{macpool.attributes['status']}", :green)}"
+          # end
+          # 
+          # #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          # xml_doc.xpath("configConfMos").each do |wwnn|
+          #    puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
+          # end
 
         else
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
