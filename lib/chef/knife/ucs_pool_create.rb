@@ -72,7 +72,18 @@ class Chef
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
                    :subnet_mask => Chef::Config[:knife][:mask], :gateway => Chef::Config[:knife][:gateway] }.to_json
-          puts provisioner.create_management_ip_pool(json)
+          xml_response = provisioner.create_management_ip_pool(json)
+          xml_doc = Nokogiri::XML(xml_response)
+          xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |pool|
+            puts "Management IP Block from: #{ui.color("#{org.attributes['from']}", :magenta)} to: #{ui.color("#{org.attributes['to']}", :magenta)}" + 
+                  " status: #{ui.color("#{org.attributes['status']}", :green)}"
+          end
+
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |org|
+             puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
+          end
+
         else
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
         end
