@@ -72,7 +72,7 @@ class Chef
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
                    :subnet_mask => Chef::Config[:knife][:mask], :gateway => Chef::Config[:knife][:gateway] }.to_json
-          provisioner.create_management_ip_pool(json)
+          puts provisioner.create_management_ip_pool(json)
         else
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
         end
