@@ -134,7 +134,7 @@ class Chef
           json =  { :wwpn_name => Chef::Config[:knife][:name],  :wwpn_from => Chef::Config[:knife][:start], 
                     :wwpn_to => Chef::Config[:knife][:end],     :org => Chef::Config[:knife][:org] }.to_json
         
-          puts provisioner.create_wwpn_pool(json)
+          xml_response = provisioner.create_wwpn_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwpn|
