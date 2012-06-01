@@ -94,15 +94,15 @@ class Chef
           end
           
         when 'mac'
-          json =  { :mac_pool_name => Chef::Config[:knife][:name], :mac_pool_start => Chef::Config[:knife][:start], 
-                    :mac_pool_end => Chef::Config[:knife][:end],   :org => Chef::Config[:knife][:org] }.to_json
+          json =  { :mac_pool_name => Chef::Config[:knife][:name], :mac_pool_start => Chef::Config[:knife][:start].to_s, 
+                    :mac_pool_end => Chef::Config[:knife][:end].to_s,   :org => Chef::Config[:knife][:org] }.to_json
           
           xml_response = provisioner.create_mac_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
   
           xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |macpool|
             puts ''
-            puts "MAC address pool from: #{ui.color("#{macpool.attributes['from']}.to_s", :magenta)} to: #{ui.color("#{macpool.attributes['to']}.to_s", :magenta)}" + 
+            puts "MAC address pool from: #{ui.color("#{macpool.attributes['from']}", :magenta)} to: #{ui.color("#{macpool.attributes['to']}", :magenta)}" + 
                   " status: #{ui.color("#{macpool.attributes['status']}", :green)}"
           end
 
