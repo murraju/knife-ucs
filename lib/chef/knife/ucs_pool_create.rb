@@ -94,8 +94,8 @@ class Chef
           end
           
         when 'mac'
-          json =  { :mac_pool_name => Chef::Config[:knife][:name],          :mac_pool_start => "#{Chef::Config[:knife][:start]}.to_s", 
-                    :mac_pool_end => "#{Chef::Config[:knife][:end]}.to_s",  :org => Chef::Config[:knife][:org] }.to_json
+          json =  { :mac_pool_name => Chef::Config[:knife][:name],          :mac_pool_start => "#{Chef::Config[:knife][:start]}".to_s, 
+                    :mac_pool_end => "#{Chef::Config[:knife][:end]}".to_s,  :org => Chef::Config[:knife][:org] }.to_json
           
           xml_response = provisioner.create_mac_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
