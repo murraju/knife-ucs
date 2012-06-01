@@ -25,36 +25,36 @@ class Chef
 
       banner "knife ucs pool create (options)"
       
-      option :pool_type,
+      option :pool,
         :short => "-P POOL",
         :long => "--pool POOLTYPE",
         :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",
-        :proc => Proc.new { |f| Chef::Config[:knife][:pool_type] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
 
-      option :pool_name,
+      option :name,
         :short => "-N NAME",
-        :long => "--poolname POOLNAME",
+        :long => "--pool-name POOLNAME",
         :description => "The pool name",
-        :proc => Proc.new { |f| Chef::Config[:knife][:pool_name] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
 
-      option :start_range,
+      option :start,
         :short => "-S START",
-        :long => "--poolstart STARTRANGE",
+        :long => "--pool-start STARTRANGE",
         :description => "Start of a pool range <IP, WWPN, WWNN, MAC>",
-        :proc => Proc.new { |f| Chef::Config[:knife][:start_range] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:start] = f }
 
-      option :end_range,
+      option :end,
         :short => "-E END",
-        :long => "--poolend ENDRANGE",
+        :long => "--pool-end ENDRANGE",
         :description => "End of a pool range <IP, WWPN, WWNN, MAC>",
-        :proc => Proc.new { |f| Chef::Config[:knife][:end_range] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:end] = f }
 
 
-      option :subnet_mask,
+      option :mask,
         :short => "-M MASK",
-        :long => "--subnetmask SUBNETMASK",
+        :long => "--subnet-mask SUBNETMASK",
         :description => "The subnet mask for an IP range",
-        :proc => Proc.new { |f| Chef::Config[:knife][:subnet_mask] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:mask] = f }
 
       option :gateway,
         :short => "-G GATEWAY",
@@ -66,7 +66,7 @@ class Chef
         $stdout.sync = true
         attr_accessor :initial_sleep_delay
           
-        pool_type = "#{Chef::Config[:knife][:pool_type]}"
+        pool_type = "#{Chef::Config[:knife][:pool]}"
         case pool_type
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
