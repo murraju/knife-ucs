@@ -62,7 +62,13 @@ class Chef
         :short => "-G GATEWAY",
         :long => "--gateway IPGATEWAY",
         :description => "The IP Gateway address of a subnet",
-        :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }      
+        :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }
+
+      option :org,
+        :short => "-O ORG",
+        :long => "--org ORG",
+        :description => "The organization",
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }      
 
       def run
         $stdout.sync = true
@@ -72,18 +78,26 @@ class Chef
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
                    :subnet_mask => Chef::Config[:knife][:mask], :gateway => Chef::Config[:knife][:gateway] }.to_json
+          
           xml_response = provisioner.create_management_ip_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
-          xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |pool|
+  
+          xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |ippool|
             puts ''
-            puts "Management IP Block from: #{ui.color("#{pool.attributes['from']}", :magenta)} to: #{ui.color("#{pool.attributes['to']}", :magenta)}" + 
-                  " status: #{ui.color("#{pool.attributes['status']}", :green)}"
+            puts "Management IP Block from: #{ui.color("#{ippool.attributes['from']}", :magenta)} to: #{ui.color("#{ippool.attributes['to']}", :magenta)}" + 
+                  " status: #{ui.color("#{ippool.attributes['status']}", :green)}"
           end
 
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-          xml_doc.xpath("configConfMos").each do |pool|
-             puts "#{pool.attributes['errorCode']} #{ui.color("#{pool.attributes['errorDescr']}", :red)}"
+          xml_doc.xpath("configConfMos").each do |ippool|
+             puts "#{ippool.attributes['errorCode']} #{ui.color("#{ippool.attributes['errorDescr']}", :red)}"
           end
+          
+        when 'mac'
+          json =  { :mac_pool_name => Chef::Config[:knife][:name], :mac_pool_start => Chef::Config[:knife][:start], 
+                    :mac_pool_end => Chef::Config[:knife][:end],   :org => Chef::Config[:knife][:org] }.to_json
+          
+          puts provisioner.create_mac_pool(json)
 
         else
           puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn,managementip"
