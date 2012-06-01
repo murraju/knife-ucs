@@ -145,7 +145,7 @@ class Chef
         
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
           xml_doc.xpath("configConfMos").each do |wwpn|
-             puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
+             puts "#{wwpn.attributes['errorCode']} #{ui.color("#{wwpn.attributes['errorDescr']}", :red)}"
           end
 
       else
