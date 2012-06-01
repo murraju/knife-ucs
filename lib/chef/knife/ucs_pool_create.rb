@@ -26,6 +26,7 @@ class Chef
       banner "knife ucs pool create (options)"
 
       def run
+        $stdout.sync = true
         attr_accessor :initial_sleep_delay
 
         option :pool,
@@ -35,27 +36,32 @@ class Chef
           :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
 
         option :name,
+          :short => "-N NAME",
           :long => "--poolname POOLNAME",
           :description => "The pool name",
           :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
 
         option :start,
+          :short => "-S START",
           :long => "--poolstart STARTRANGE",
           :description => "Start of a pool range <IP, WWPN, WWNN, MAC>",
           :proc => Proc.new { |f| Chef::Config[:knife][:start] = f }
 
         option :end,
+          :short => "-E END",
           :long => "--poolend ENDRANGE",
           :description => "End of a pool range <IP, WWPN, WWNN, MAC>",
           :proc => Proc.new { |f| Chef::Config[:knife][:end] = f }
 
 
         option :mask,
+          :short => "-M MASK",
           :long => "--subnetmask SUBNETMASK",
           :description => "The subnet mask for an IP range",
           :proc => Proc.new { |f| Chef::Config[:knife][:mask] = f }
 
         option :gateway,
+          :short => "-G GATEWAY",
           :long => "--gateway IPGATEWAY",
           :description => "The IP Gateway address of a subnet",
           :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }
@@ -65,6 +71,8 @@ class Chef
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
                    :subnet_mask => Chef::Config[:knife][:mask], :gateway => Chef::Config[:knife][:gateway] }.to_json
+        else
+          
         end
 
       end
