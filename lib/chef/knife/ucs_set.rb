@@ -79,18 +79,20 @@ class Chef
         when 'power'
           json = { :power_policy => Chef::Config[:knife][:power] }.to_json
           
-          xml_response = provisioner.set_power_policy(json)
-          xml_doc = Nokogiri::XML(xml_response)
-  
-          xml_doc.xpath("configConfMos/outConfigs/pair/computePsuPolicy").each do |power|
-            puts ''
-            puts "Power Policy: #{ui.color("#{power.attributes['name']}", :magenta)} status: #{ui.color("#{power.attributes['status']}", :green)}"
-          end
-
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-          xml_doc.xpath("configConfMos").each do |power|
-             puts "#{power.attributes['errorCode']} #{ui.color("#{power.attributes['errorDescr']}", :red)}"
-          end          
+          puts provisioner.set_power_policy(json)
+          
+          # xml_response = provisioner.set_power_policy(json)
+          # xml_doc = Nokogiri::XML(xml_response)
+          #   
+          # xml_doc.xpath("configConfMos/outConfigs/pair/computePsuPolicy").each do |power|
+          #   puts ''
+          #   puts "Power Policy: #{ui.color("#{power.attributes['name']}", :magenta)} status: #{ui.color("#{power.attributes['status']}", :green)}"
+          # end
+          # 
+          # #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          # xml_doc.xpath("configConfMos").each do |power|
+          #    puts "#{power.attributes['errorCode']} #{ui.color("#{power.attributes['errorDescr']}", :red)}"
+          # end          
           
         else
           puts ''
