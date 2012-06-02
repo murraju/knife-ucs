@@ -36,13 +36,18 @@ class Chef
 
       option :config,
         :long => "--config-item CONFIGIETM",
-        :description => "The item to configure which includes ntp, timezone, power, chassis-discovery-policy",
+        :description => "The item to configure which includes ntp, timezone, power, chassis-discovery",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
       option :power,
         :long => "--power-policy POWERPOLICY",
         :description => "The power policy to use",
         :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
+        
+      option :discovery,
+        :long => "--time-zone TIMEZONE",
+        :description => "The timezone for this UCS Domain",
+        :proc => Proc.new { |f| Chef::Config[:knife][:discovery] = f }
 
       option :ntp,
         :long => "--ntp-server NTPSERVER",
@@ -91,10 +96,25 @@ class Chef
           xml_doc.xpath("configConfMos").each do |power|
              puts "#{power.attributes['errorCode']} #{ui.color("#{power.attributes['errorDescr']}", :red)}"
           end          
+
+        when 'chassis-discovery'
+          json = { :chassis_discovery_policy => Chef::Config[:knife][:discovery] }.to_json
           
+          xml_response = provisioner.set_chassis_discovery_policy(json)
+          xml_doc = Nokogiri::XML(xml_response)
+            
+          xml_doc.xpath("configConfMos/outConfigs/pair/computeChassisDiscPolicy").each do |chassis|
+            puts ''
+            puts "Power Policy: #{ui.color("#{chassis.attributes['name']}", :magenta)} status: #{ui.color("#{chassis.attributes['status']}", :green)}"
+          end
+          
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |chassis|
+             puts "#{chassis.attributes['errorCode']} #{ui.color("#{chassis.attributes['errorDescr']}", :red)}"
+          end          
         else
           puts ''
-          puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery-policy"
+          puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery"
           puts ''
         end      
         
