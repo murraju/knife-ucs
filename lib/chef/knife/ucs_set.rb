@@ -63,7 +63,18 @@ class Chef
         when 'ntp'
           json = { :ntp_server => Chef::Config[:knife][:ntp] }.to_json
           
-          puts provisioner.set_ntp(json)
+          xml_response = provisioner.set_ntp(json)
+          xml_doc = Nokogiri::XML(xml_response)
+  
+          xml_doc.xpath("configConfMos/outConfigs/pair/commNtpProvider").each do |ntp|
+            puts ''
+            puts "NTP Server: #{ui.color("#{ntp.attributes['name']}", :magenta)} status: #{ui.color("#{ntp.attributes['status']}", :green)}"
+          end
+
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |ntp|
+             puts "#{ntp.attributes['errorCode']} #{ui.color("#{ntp.attributes['errorDescr']}", :red)}"
+          end
           
         else
           puts "Incorrect options. Please make sure you are using one of the following: ntp,time-zone,power-policy,chassis-discovery-policy"
