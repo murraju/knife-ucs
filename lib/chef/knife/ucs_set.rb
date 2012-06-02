@@ -76,7 +76,7 @@ class Chef
              puts "#{ntp.attributes['errorCode']} #{ui.color("#{ntp.attributes['errorDescr']}", :red)}"
           end
           
-        when 'power'
+        when 'power-policy'
           json = { :power_policy => Chef::Config[:knife][:power] }.to_json
           
           xml_response = provisioner.set_power_policy(json)
