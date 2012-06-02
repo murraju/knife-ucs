@@ -36,7 +36,7 @@ class Chef
 
       option :config,
         :long => "--config-item CONFIGIETM",
-        :description => "The item to configure which includes ntp, time-zone, power-policy, chassis-discovery-policy",
+        :description => "The item to configure which includes ntp, timezone, power, chassis-discovery-policy",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
       option :power,
@@ -76,7 +76,7 @@ class Chef
              puts "#{ntp.attributes['errorCode']} #{ui.color("#{ntp.attributes['errorDescr']}", :red)}"
           end
           
-        when 'power-policy'
+        when 'power'
           json = { :power_policy => Chef::Config[:knife][:power] }.to_json
           
           xml_response = provisioner.set_power_policy(json)
