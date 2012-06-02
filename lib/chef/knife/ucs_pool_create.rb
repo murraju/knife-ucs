@@ -22,6 +22,13 @@ class Chef
     class UcsPoolCreate < Knife
 
       include Knife::UCSBase
+      
+      deps do
+        require 'readline'
+        require 'chef/json_compat'
+        require 'chef/knife/bootstrap'
+        Chef::Knife::Bootstrap.load_deps
+      end      
 
       banner "knife ucs pool create (options)"
       

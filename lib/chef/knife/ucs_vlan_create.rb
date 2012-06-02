@@ -39,10 +39,10 @@ class Chef
         :description => "The VLAN ID",
         :proc => Proc.new { |f| Chef::Config[:knife][:vlanid] = f }
 
-        option :vlanname,
-          :long => "--vlanname VLANNAME",
-          :description => "The VLAN NAME",
-          :proc => Proc.new { |f| Chef::Config[:knife][:vlanname] = f }
+      option :vlanname,
+        :long => "--vlanname VLANNAME",
+        :description => "The VLAN NAME",
+        :proc => Proc.new { |f| Chef::Config[:knife][:vlanname] = f }
 
       def run
         $stdout.sync = true
