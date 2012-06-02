@@ -35,7 +35,7 @@ class Chef
       attr_accessor :initial_sleep_delay
 
       option :config,
-        :long => "--config-item <ntp,time-zone,power-policy,chassis-discovery-policy>",
+        :long => "--config-item CONFIGIETM",
         :description => "The item to configure which includes ntp, time-zone, power-policy, chassis-discovery-policy",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
