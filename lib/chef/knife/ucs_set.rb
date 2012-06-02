@@ -45,8 +45,8 @@ class Chef
         :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
         
       option :discovery,
-        :long => "--time-zone TIMEZONE",
-        :description => "The timezone for this UCS Domain",
+        :long => "--chassis-discovery CHASSISDISCOVERY",
+        :description => "The chassis discovery policy",
         :proc => Proc.new { |f| Chef::Config[:knife][:discovery] = f }
 
       option :ntp,
