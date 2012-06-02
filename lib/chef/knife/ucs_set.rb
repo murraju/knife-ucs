@@ -111,7 +111,23 @@ class Chef
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
           xml_doc.xpath("configConfMos").each do |chassis|
              puts "#{chassis.attributes['errorCode']} #{ui.color("#{chassis.attributes['errorDescr']}", :red)}"
-          end          
+          end
+
+        when 'timezone'
+          json = { :time_zone => Chef::Config[:knife][:timezone] }.to_json
+          
+          xml_response = provisioner.set_time_zone(json)
+          xml_doc = Nokogiri::XML(xml_response)
+            
+          xml_doc.xpath("configConfMos/outConfigs/pair/commDateTime").each do |timezone|
+            puts ''
+            puts "Timezone: #{ui.color("#{timezone.attributes['timezone']}", :magenta)} status: #{ui.color("#{timezone.attributes['status']}", :green)}"
+          end
+          
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |timezone|
+             puts "#{timezone.attributes['errorCode']} #{ui.color("#{timezone.attributes['errorDescr']}", :red)}"
+          end                    
         else
           puts ''
           puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery"
