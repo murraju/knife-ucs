@@ -40,12 +40,12 @@ class Chef
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
       option :power,
-        :long => "--power-policy POWERPOLICY",
+        :long => "--power-policy POLICY",
         :description => "The power policy to use",
         :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
         
       option :discovery,
-        :long => "--chassis-discovery CHASSISDISCOVERY",
+        :long => "--chassis-discovery POLICY",
         :description => "The chassis discovery policy",
         :proc => Proc.new { |f| Chef::Config[:knife][:discovery] = f }
 
