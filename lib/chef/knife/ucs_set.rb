@@ -77,7 +77,7 @@ class Chef
           end
           
         when 'power'
-          json = { :power_policy => Chef::Config[:knife][:power] }.to_json
+          json = { :power_policy => Chef::Config[:knife][:policy] }.to_json
           
           xml_response = provisioner.set_power_policy(json)
           xml_doc = Nokogiri::XML(xml_response)
