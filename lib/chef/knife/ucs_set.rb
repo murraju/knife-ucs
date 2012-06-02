@@ -93,7 +93,9 @@ class Chef
           end          
           
         else
-          puts "Incorrect options. Please make sure you are using one of the following: ntp,time-zone,power-policy,chassis-discovery-policy"
+          puts ''
+          puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery-policy"
+          puts ''
         end      
         
       end
