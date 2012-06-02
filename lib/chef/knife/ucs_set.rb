@@ -105,7 +105,7 @@ class Chef
             
           xml_doc.xpath("configConfMos/outConfigs/pair/computeChassisDiscPolicy").each do |chassis|
             puts ''
-            puts "Power Policy: #{ui.color("#{chassis.attributes['name']}", :magenta)} status: #{ui.color("#{chassis.attributes['status']}", :green)}"
+            puts "Chassis Discovery Policy: #{ui.color("#{chassis.attributes['action']}", :magenta)} status: #{ui.color("#{chassis.attributes['status']}", :green)}"
           end
           
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
