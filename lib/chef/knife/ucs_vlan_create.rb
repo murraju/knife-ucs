@@ -49,12 +49,13 @@ class Chef
         
         json = {:vlan_id => Chef::Config[:knife][:vlanid], :vlan_name => Chef::Config[:knife][:vlanname] }.to_json
         
-        xml_response = provisioner.create_vlan(json)
+        xml_response = destroyer.delete_vlan(json)
         xml_doc = Nokogiri::XML(xml_response)
+        
         xml_doc.xpath("configConfMos/outConfigs/pair/fabricVlan").each do |org|
             puts ''
             puts "VLAN ID: #{ui.color("#{org.attributes['id']}", :magenta)} NAME: #{ui.color("#{org.attributes['name']}", :magenta)}" + 
-                  " status: #{ui.color("#{org.attributes['status']}", :green)}"
+                  " status: #{ui.color("#{org.attributes['status']}", :red)}"
         end        
         
         #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
