@@ -116,7 +116,7 @@ class Chef
           
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicSanConnTempl").each do |vnic|
               puts ''
-              puts "vNIC Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
+              puts "vHBA Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
                     " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
           end        
           
