@@ -91,7 +91,7 @@ class Chef
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicLanConnTempl").each do |vnic|
               puts ''
               puts "vNIC Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
-                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :red)}"
+                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
           end        
 
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
