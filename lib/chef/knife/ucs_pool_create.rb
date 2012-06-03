@@ -34,11 +34,11 @@ class Chef
       
       attr_accessor :initial_sleep_delay
       
-      option :pool,
+      option :pooltype,
         :short => "-P POOL",
-        :long => "--pool POOLTYPE",
+        :long => "--pool-type POOLTYPE",
         :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",
-        :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:pooltype] = f }
 
       option :name,
         :short => "-N NAME",
@@ -80,7 +80,7 @@ class Chef
       def run
         $stdout.sync = true
           
-        pool_type = "#{Chef::Config[:knife][:pool]}".downcase
+        pool_type = "#{Chef::Config[:knife][:pooltype]}".downcase
         case pool_type
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
