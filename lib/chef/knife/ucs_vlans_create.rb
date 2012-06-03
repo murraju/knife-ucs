@@ -54,7 +54,7 @@ class Chef
         
         xml_doc.xpath("configConfMos/outConfigs/pair/fabricVlan").each do |org|
             puts ''
-            puts "VLAN ID: #{ui.color("#{org.attributes['id']}", :magenta)} NAME: #{ui.color("#{org.attributes['name']}", :magenta)}" + 
+            puts "VLAN ID: #{ui.color("#{org.attributes['id']}", :blue)} NAME: #{ui.color("#{org.attributes['name']}", :blue)}" + 
                   " status: #{ui.color("#{org.attributes['status']}", :red)}"
         end        
         

@@ -49,7 +49,7 @@ class Chef
         
         xml_doc.xpath("configConfMos/outConfigs/pair/orgOrg").each do |org|
             puts ''
-            puts "Org: #{ui.color("#{org.attributes['name']}", :magenta)} status: #{ui.color("#{org.attributes['status']}", :red)}"
+            puts "Org: #{ui.color("#{org.attributes['name']}", :blue)} status: #{ui.color("#{org.attributes['status']}", :red)}"
         end
 
         #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option

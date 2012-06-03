@@ -91,7 +91,7 @@ class Chef
   
           xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |ippool|
             puts ''
-            puts "Management IP Block from: #{ui.color("#{ippool.attributes['from']}", :magenta)} to: #{ui.color("#{ippool.attributes['to']}", :magenta)}" + 
+            puts "Management IP Block from: #{ui.color("#{ippool.attributes['from']}", :blue)} to: #{ui.color("#{ippool.attributes['to']}", :blue)}" + 
                   " status: #{ui.color("#{ippool.attributes['status']}", :green)}"
           end
 
@@ -109,7 +109,7 @@ class Chef
   
           xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |macpool|
             puts ''
-            puts "MAC address pool : #{ui.color("#{macpool.attributes['name']}", :magenta)}" + 
+            puts "MAC address pool : #{ui.color("#{macpool.attributes['name']}", :blue)}" + 
                   " status: #{ui.color("#{macpool.attributes['status']}", :green)}"
           end
 
@@ -127,7 +127,7 @@ class Chef
             
           xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwnn|
             puts ''
-            puts "WWNN pool : #{ui.color("#{wwnn.attributes['name']}", :magenta)}" + 
+            puts "WWNN pool : #{ui.color("#{wwnn.attributes['name']}", :blue)}" + 
                   " status: #{ui.color("#{wwnn.attributes['status']}", :green)}"
           end
           
@@ -146,7 +146,7 @@ class Chef
           
           xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwpn|
             puts ''
-            puts "WWPN pool : #{ui.color("#{wwpn.attributes['name']}", :magenta)}" + 
+            puts "WWPN pool : #{ui.color("#{wwpn.attributes['name']}", :blue)}" + 
                   " status: #{ui.color("#{wwpn.attributes['status']}", :green)}"
           end
         
@@ -164,7 +164,7 @@ class Chef
           
           xml_doc.xpath("configConfMos/outConfigs/pair/uuidpoolPool").each do |uuid|
             puts ''
-            puts "UUID pool : #{ui.color("#{uuid.attributes['name']}", :magenta)}" + 
+            puts "UUID pool : #{ui.color("#{uuid.attributes['name']}", :blue)}" + 
                   " status: #{ui.color("#{uuid.attributes['status']}", :green)}"
           end
         

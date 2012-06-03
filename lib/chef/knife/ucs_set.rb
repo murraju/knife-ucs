@@ -73,7 +73,7 @@ class Chef
   
           xml_doc.xpath("configConfMos/outConfigs/pair/commNtpProvider").each do |ntp|
             puts ''
-            puts "NTP Server: #{ui.color("#{ntp.attributes['name']}", :magenta)} status: #{ui.color("#{ntp.attributes['status']}", :green)}"
+            puts "NTP Server: #{ui.color("#{ntp.attributes['name']}", :blue)} status: #{ui.color("#{ntp.attributes['status']}", :green)}"
           end
 
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
@@ -89,7 +89,7 @@ class Chef
             
           xml_doc.xpath("configConfMos/outConfigs/pair/computePsuPolicy").each do |power|
             puts ''
-            puts "Power Policy: #{ui.color("#{power.attributes['name']}", :magenta)} status: #{ui.color("#{power.attributes['status']}", :green)}"
+            puts "Power Policy: #{ui.color("#{power.attributes['name']}", :blue)} status: #{ui.color("#{power.attributes['status']}", :green)}"
           end
           
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
@@ -105,7 +105,7 @@ class Chef
             
           xml_doc.xpath("configConfMos/outConfigs/pair/computeChassisDiscPolicy").each do |chassis|
             puts ''
-            puts "Chassis Discovery Policy: #{ui.color("#{chassis.attributes['action']}", :magenta)} status: #{ui.color("#{chassis.attributes['status']}", :green)}"
+            puts "Chassis Discovery Policy: #{ui.color("#{chassis.attributes['action']}", :blue)} status: #{ui.color("#{chassis.attributes['status']}", :green)}"
           end
           
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
@@ -121,7 +121,7 @@ class Chef
             
           xml_doc.xpath("configConfMos/outConfigs/pair/commDateTime").each do |timezone|
             puts ''
-            puts "Timezone: #{ui.color("#{timezone.attributes['timezone']}", :magenta)} status: #{ui.color("#{timezone.attributes['status']}", :green)}"
+            puts "Timezone: #{ui.color("#{timezone.attributes['timezone']}", :blue)} status: #{ui.color("#{timezone.attributes['status']}", :green)}"
           end
           
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
