@@ -35,44 +35,37 @@ class Chef
       attr_accessor :initial_sleep_delay
       
       option :pooltype,
-        :short => "-P POOL",
         :long => "--pool-type POOLTYPE",
         :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",
         :proc => Proc.new { |f| Chef::Config[:knife][:pooltype] = f }
 
       option :name,
-        :short => "-N NAME",
         :long => "--pool-name POOLNAME",
         :description => "The pool name",
         :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
 
       option :start,
-        :short => "-S START",
         :long => "--pool-start STARTRANGE",
         :description => "Start of a pool range <IP, WWPN, WWNN, MAC>",
         :proc => Proc.new { |f| Chef::Config[:knife][:start] = f }
 
       option :end,
-        :short => "-E END",
         :long => "--pool-end ENDRANGE",
         :description => "End of a pool range <IP, WWPN, WWNN, MAC>",
         :proc => Proc.new { |f| Chef::Config[:knife][:end] = f }
 
 
       option :mask,
-        :short => "-M MASK",
         :long => "--subnet-mask SUBNETMASK",
         :description => "The subnet mask for an IP range",
         :proc => Proc.new { |f| Chef::Config[:knife][:mask] = f }
 
       option :gateway,
-        :short => "-G GATEWAY",
         :long => "--gateway IPGATEWAY",
         :description => "The IP Gateway address of a subnet",
         :proc => Proc.new { |f| Chef::Config[:knife][:gateway] = f }
 
       option :org,
-        :short => "-O ORG",
         :long => "--org ORG",
         :description => "The organization",
         :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }      
