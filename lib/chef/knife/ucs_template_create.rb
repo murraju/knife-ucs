@@ -61,7 +61,7 @@ class Chef
 
       option :vlans,
         :long => "--vlans VLANS",
-        :description => "The vlans to use separated by commas <vlan1,vlan2,vlan3>",
+        :description => "The vlans IDs to use separated by commas <vlan1,vlan2,vlan3>",
         :proc => Proc.new { |f| Chef::Config[:knife][:vlans] = f }
 
       option :native,
@@ -77,7 +77,7 @@ class Chef
       def run
         $stdout.sync = true
         
-        template_type = "#{Chef::Config[:knife][:template]}"
+        template_type = "#{Chef::Config[:knife][:template]}".downcase
         case template_type
         when 'vnic'
     		  
@@ -85,7 +85,20 @@ class Chef
                    :switch => Chef::Config[:knife][:fabric], :org => Chef::Config[:knife][:org], :vnic_template_VLANs => Chef::Config[:knife][:vlans],
                    :vnic_template_native_VLAN => Chef::Config[:knife][:native], :vnic_template_mtu => Chef::Config[:knife][:mtu] }.to_json
           
-          puts provisioner.create_vnic_template(json)
+          xml_response = provisioner.create_vnic_template(json)
+          xml_doc = Nokogiri::XML(xml_response)
+
+          xml_doc.xpath("configConfMos/outConfigs/pair/vnicLanConnTempl").each do |vnic|
+              puts ''
+              puts "vNIC Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
+                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :red)}"
+          end        
+
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |vnic|
+             puts "#{vnic.attributes['errorCode']} #{ui.color("#{vnic.attributes['errorDescr']}", :red)}"
+          end          
+          
         else
           "Incorrect options. Please make sure you are using one of the following: vnic,vhba,serviceprofile"
         end
