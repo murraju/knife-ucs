@@ -37,30 +37,16 @@ class Chef
       option :port,
         :long => "--port-type PORTTYPE",
         :description => "The port type <server,uplink>",
-        :proc => Proc.new { |f| Chef::Config[:knife][:vlanid] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:port] = f }
 
-      option :vlanname,
-        :long => "--vlanname VLANNAME",
-        :description => "The VLAN NAME",
-        :proc => Proc.new { |f| Chef::Config[:knife][:vlanname] = f }
+      option :switch,
+        :long => "--switch SWITCH",
+        :description => "The fabric interconnect: A or B",
+        :proc => Proc.new { |f| Chef::Config[:knife][:fabric] = f }
 
       def run
         $stdout.sync = true
-        
-        json = {:vlan_id => Chef::Config[:knife][:vlanid], :vlan_name => Chef::Config[:knife][:vlanname] }.to_json
-        
-        xml_response = provisioner.create_vlan(json)
-        xml_doc = Nokogiri::XML(xml_response)
-        xml_doc.xpath("configConfMos/outConfigs/pair/fabricVlan").each do |org|
-            puts ''
-            puts "VLAN ID: #{ui.color("#{org.attributes['id']}", :magenta)} NAME: #{ui.color("#{org.attributes['name']}", :magenta)}" + 
-                  " status: #{ui.color("#{org.attributes['status']}", :green)}"
-        end        
-        
-        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-        xml_doc.xpath("configConfMos").each do |org|
-           puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
-        end        
+               
         
       end
     end
