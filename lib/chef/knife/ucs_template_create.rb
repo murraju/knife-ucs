@@ -64,6 +64,11 @@ class Chef
         :description => "The vlans IDs to use separated by commas <vlan1,vlan2,vlan3>",
         :proc => Proc.new { |f| Chef::Config[:knife][:vlans] = f }
 
+      option :vsan,
+        :long => "--vsan VSAN",
+        :description => "The vsan ID to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:vsan] = f }
+
       option :native,
         :long => "--native-vlan VLAN",
         :description => "The native vlan name",
@@ -98,6 +103,27 @@ class Chef
           xml_doc.xpath("configConfMos").each do |vnic|
              puts "#{vnic.attributes['errorCode']} #{ui.color("#{vnic.attributes['errorDescr']}", :red)}"
           end          
+
+        when 'vhba'
+    		  
+          json = { :vhba_template_name => Chef::Config[:knife][:name], :wwpn_pool => Chef::Config[:knife][:pool],
+                   :switch => Chef::Config[:knife][:fabric], :org => Chef::Config[:knife][:org], :vsan_name => Chef::Config[:knife][:vsan] }.to_json       
+          
+          
+          puts provisioner.create_vhba_template(json)
+          # xml_response = provisioner.create_vhba_template(json)
+          # xml_doc = Nokogiri::XML(xml_response)
+          # 
+          # xml_doc.xpath("configConfMos/outConfigs/pair/vnicLanConnTempl").each do |vnic|
+          #     puts ''
+          #     puts "vNIC Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
+          #           " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
+          # end        
+          # 
+          # #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          # xml_doc.xpath("configConfMos").each do |vnic|
+          #    puts "#{vnic.attributes['errorCode']} #{ui.color("#{vnic.attributes['errorDescr']}", :red)}"
+          # end
           
         else
           "Incorrect options. Please make sure you are using one of the following: vnic,vhba,serviceprofile"
