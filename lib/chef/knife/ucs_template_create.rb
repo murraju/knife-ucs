@@ -44,6 +44,27 @@ class Chef
         :description => "The template name",
         :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
 
+      option :pool,
+        :long => "--pool-name POOLNAME",
+        :description => "The pool name for this template <macpool, wwnnpool, wwpnpool>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
+
+      option :fabric,
+        :long => "--fabric FABRIC",
+        :description => "The fabric: A or B",
+        :proc => Proc.new { |f| Chef::Config[:knife][:fabric] = f }
+
+      option :org,
+        :long => "--org ORG",
+        :description => "The organization to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
+
+      option :vlans,
+        :long => "--vlans VLANS",
+        :description => "The vlans to use separated by commas <vlan1,vlan2,vlan3>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
+
+        
       def run
         $stdout.sync = true
         
