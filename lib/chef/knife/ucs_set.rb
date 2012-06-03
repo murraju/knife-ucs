@@ -63,7 +63,7 @@ class Chef
       def run
         $stdout.sync = true
         
-        config_item = "#{Chef::Config[:knife][:config]}"
+        config_item = "#{Chef::Config[:knife][:config]}".downcase
         case config_item
         when 'ntp'
           json = { :ntp_server => Chef::Config[:knife][:ntp] }.to_json

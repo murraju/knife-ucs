@@ -80,7 +80,7 @@ class Chef
       def run
         $stdout.sync = true
           
-        pool_type = "#{Chef::Config[:knife][:pool]}"
+        pool_type = "#{Chef::Config[:knife][:pool]}".downcase
         case pool_type
         when 'managementip'
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
