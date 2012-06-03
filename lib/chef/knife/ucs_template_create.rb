@@ -106,7 +106,7 @@ class Chef
 
         when 'vhba'
     		  
-          json = { :vhba_template_name => Chef::Config[:knife][:name], :wwpn_pool => Chef::Config[:knife][:pool],
+          json = { :vbha_template_name => Chef::Config[:knife][:name], :wwpn_pool => Chef::Config[:knife][:pool],
                    :switch => Chef::Config[:knife][:fabric], :vsan_name => Chef::Config[:knife][:vsan], :org => Chef::Config[:knife][:org] }.to_json       
                		
                		
