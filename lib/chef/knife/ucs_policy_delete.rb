@@ -19,7 +19,7 @@ require 'chef/knife/ucs_base'
 
 class Chef
   class Knife
-    class UcsVlansDelete < Knife
+    class UcsPolicyDelete < Knife
 
       include Knife::UCSBase
 
@@ -30,38 +30,23 @@ class Chef
         Chef::Knife::Bootstrap.load_deps
       end
 
-      banner "knife ucs vlans delete (options)"
+      banner "knife ucs policy delete (options)"
 
       attr_accessor :initial_sleep_delay
 
-      option :vlanid,
-        :long => "--vlanid VLANID",
-        :description => "The VLAN ID",
-        :proc => Proc.new { |f| Chef::Config[:knife][:vlanid] = f }
+      option :policy,
+        :long => "--policy-type POLICY",
+        :description => "The policy type <boot,hostfirmware,managementfirmware>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
 
-      option :vlanname,
-        :long => "--vlanname VLANNAME",
-        :description => "The VLAN NAME",
-        :proc => Proc.new { |f| Chef::Config[:knife][:vlanname] = f }
+      option :name,
+        :long => "--policy-name POLICYNAME",
+        :description => "The policy name",
+        :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
 
       def run
         $stdout.sync = true
-        
-        json = {:vlan_id => Chef::Config[:knife][:vlanid], :vlan_name => Chef::Config[:knife][:vlanname] }.to_json
-        
-        xml_response = destroyer.delete_vlan(json)
-        xml_doc = Nokogiri::XML(xml_response)
-        
-        xml_doc.xpath("configConfMos/outConfigs/pair/fabricVlan").each do |org|
-            puts ''
-            puts "VLAN ID: #{ui.color("#{org.attributes['id']}", :blue)} NAME: #{ui.color("#{org.attributes['name']}", :blue)}" + 
-                  " status: #{ui.color("#{org.attributes['status']}", :red)}"
-        end        
-        
-        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-        xml_doc.xpath("configConfMos").each do |org|
-           puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
-        end        
+               
         
       end
     end
