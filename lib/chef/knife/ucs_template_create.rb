@@ -62,26 +62,32 @@ class Chef
       option :vlans,
         :long => "--vlans VLANS",
         :description => "The vlans to use separated by commas <vlan1,vlan2,vlan3>",
-        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:vlans] = f }
 
+      option :native,
+        :long => "--native-vlan VLAN",
+        :description => "The native vlan name",
+        :proc => Proc.new { |f| Chef::Config[:knife][:native] = f }
+
+      option :mtu,
+        :long => "--mtu MTU",
+        :description => "The MTU value",
+        :proc => Proc.new { |f| Chef::Config[:knife][:mtu] = f }
         
       def run
         $stdout.sync = true
         
-        json = {:vlan_id => Chef::Config[:knife][:vlanid], :vlan_name => Chef::Config[:knife][:vlanname] }.to_json
-        
-        xml_response = provisioner.create_vlan(json)
-        xml_doc = Nokogiri::XML(xml_response)
-        xml_doc.xpath("configConfMos/outConfigs/pair/fabricVlan").each do |org|
-            puts ''
-            puts "VLAN ID: #{ui.color("#{org.attributes['id']}", :magenta)} NAME: #{ui.color("#{org.attributes['name']}", :magenta)}" + 
-                  " status: #{ui.color("#{org.attributes['status']}", :green)}"
-        end        
-        
-        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-        xml_doc.xpath("configConfMos").each do |org|
-           puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
-        end        
+        template_type = "#{Chef::Config[:knife][:template]}"
+        case template_type
+        when 'vnic'
+    		  
+          json = { :vnic_template_name => Chef::Config[:knife][:name], :vnic_template_mac_pool => Chef::Config[:knife][:pool],
+                   :switch => Chef::Config[:knife][:fabric], :org => Chef::Config[:knife][:org], :vnic_template_VLANs => Chef::Config[:knife][:vlans],
+                   :vnic_template_native_VLAN => Chef::Config[:knife][:native], :vnic_template_mtu => Chef::Config[:knife][:mtu] }.to_json
+          
+          puts provisioner.create_vnic_template(json)
+          
+        end
         
       end
     end
