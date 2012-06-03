@@ -65,8 +65,8 @@ class Chef
         :proc => Proc.new { |f| Chef::Config[:knife][:vlans] = f }
 
       option :vsan,
-        :long => "--vsan VSAN",
-        :description => "The vsan ID to use",
+        :long => "--vsan-name VSAN",
+        :description => "The vsan name to use",
         :proc => Proc.new { |f| Chef::Config[:knife][:vsan] = f }
 
       option :native,
