@@ -95,8 +95,8 @@ class Chef
 
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicLanConnTempl").each do |vnic|
               puts ''
-              puts "vNIC Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
-                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
+              puts "vNIC Template: #{ui.color("#{vnic.attributes['name']}", :blue)} Type: #{ui.color("#{vnic.attributes['templType']}", :blue)}" + 
+                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :blue)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
           end        
 
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
@@ -116,8 +116,8 @@ class Chef
           
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicSanConnTempl").each do |vnic|
               puts ''
-              puts "vHBA Template: #{ui.color("#{vnic.attributes['name']}", :magenta)} Type: #{ui.color("#{vnic.attributes['templType']}", :magenta)}" + 
-                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :magenta)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
+              puts "vHBA Template: #{ui.color("#{vnic.attributes['name']}", :blue)} Type: #{ui.color("#{vnic.attributes['templType']}", :blue)}" + 
+                    " Fabric: #{ui.color("#{vnic.attributes['switchId']}", :blue)} status: #{ui.color("#{vnic.attributes['status']}", :green)}"
           end        
           
           #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
