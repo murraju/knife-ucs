@@ -49,7 +49,7 @@ class Chef
         
         json = {:vlan_id => Chef::Config[:knife][:vlanid], :vlan_name => Chef::Config[:knife][:vlanname] }.to_json
         
-        xml_response = destroyer.delete_vlan(json)
+        xml_response = provisioner.create_vlan(json)
         xml_doc = Nokogiri::XML(xml_response)
         
         xml_doc.xpath("configConfMos/outConfigs/pair/fabricVlan").each do |org|

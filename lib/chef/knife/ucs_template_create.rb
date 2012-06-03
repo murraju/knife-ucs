@@ -86,7 +86,8 @@ class Chef
                    :vnic_template_native_VLAN => Chef::Config[:knife][:native], :vnic_template_mtu => Chef::Config[:knife][:mtu] }.to_json
           
           puts provisioner.create_vnic_template(json)
-          
+        else
+          "Incorrect options. Please make sure you are using one of the following: vnic,vhba,serviceprofile"
         end
         
       end
