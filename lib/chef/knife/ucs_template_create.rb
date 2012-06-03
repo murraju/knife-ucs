@@ -108,8 +108,7 @@ class Chef
     		  
           json = { :vhba_template_name => Chef::Config[:knife][:name], :wwpn_pool => Chef::Config[:knife][:pool],
                    :switch => Chef::Config[:knife][:fabric], :org => Chef::Config[:knife][:org], :vsan_name => Chef::Config[:knife][:vsan] }.to_json       
-          
-          
+
           puts provisioner.create_vhba_template(json)
           # xml_response = provisioner.create_vhba_template(json)
           # xml_doc = Nokogiri::XML(xml_response)
