@@ -46,12 +46,12 @@ class Chef
 
       option :pool,
         :long => "--pool-name POOLNAME",
-        :description => "The pool name for this template <macpool, wwnnpool, wwpnpool>",
+        :description => "The pool name to use for this template <macpool, wwnnpool, wwpnpool>",
         :proc => Proc.new { |f| Chef::Config[:knife][:pool] = f }
 
       option :fabric,
         :long => "--fabric FABRIC",
-        :description => "The fabric: A or B",
+        :description => "Fabric: A or B switch",
         :proc => Proc.new { |f| Chef::Config[:knife][:fabric] = f }
 
       option :org,
