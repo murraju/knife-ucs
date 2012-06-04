@@ -127,9 +127,26 @@ class Chef
 
         when 'serviceprofile'
     		  
-          json = { :vbha_template_name => Chef::Config[:knife][:name], :wwpn_pool => Chef::Config[:knife][:pool],
-                   :switch => Chef::Config[:knife][:fabric], :vsan_name => Chef::Config[:knife][:vsan], :org => Chef::Config[:knife][:org] }.to_json       
-               		
+          json = { :service_profile_template_name => Chef::Config[:knife][:name], :service_profile_template_boot_policy => Chef::Config[:knife][:bootpolicy],
+                   :service_profile_template_host_fw_policy => Chef::Config[:knife][:hostfwpolicy], :service_profile_template_mgmt_fw_policy => Chef::Config[:knife][:mgmtfwpolicy], 
+                   :org => Chef::Config[:knife][:org] }.to_json       
+                   # 
+                   # service_profile_template_name               = JSON.parse(json)['service_profile_template_name']
+                   # service_profile_template_boot_policy        = JSON.parse(json)['service_profile_template_boot_policy']
+                   # service_profile_template_host_fw_policy     = JSON.parse(json)['service_profile_template_host_fw_policy']
+                   # service_profile_template_mgmt_fw_policy     = JSON.parse(json)['service_profile_template_mgmt_fw_policy']
+                   # service_profile_template_uuid_pool          = JSON.parse(json)['service_profile_template_uuid_pool']
+                   # service_profile_template_vnics_a            = JSON.parse(json)['service_profile_template_vnics_a'].split(',')
+                   # service_profile_template_vnic_a_template    = JSON.parse(json)['service_profile_template_vnic_a_template']
+                   # service_profile_template_vnics_b            = JSON.parse(json)['service_profile_template_vnics_b'].split(',')
+                   # service_profile_template_vnic_b_template    = JSON.parse(json)['service_profile_template_vnic_b_template'].to_s
+                   # service_profile_template_wwnn_pool          = JSON.parse(json)['service_profile_template_wwnn_pool'].to_s
+                   # service_profile_template_vhba_a             = JSON.parse(json)['service_profile_template_vhba_a']
+                   # service_profile_template_vhba_a_template    = JSON.parse(json)['service_profile_template_vhba_a_template']
+                   # service_profile_template_vhba_b             = JSON.parse(json)['service_profile_template_vhba_b'].to_s
+                   # service_profile_template_vhba_b_template    = JSON.parse(json)['service_profile_template_vhba_b_template'].to_s
+                   # org                                         = JSON.parse(json)['org'].to_s
+                   #                    
                		
           #puts provisioner.create_vhba_template(json)
           xml_response = provisioner.create_vhba_template(json)
