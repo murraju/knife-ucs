@@ -36,7 +36,7 @@ class Chef
 
       option :config,
         :long => "--config-item CONFIGIETM",
-        :description => "The item to configure which includes ntp, timezone, power, chassis-discovery",
+        :description => "The item to configure which includes ntp, timezone, power, chassis-discovery, local-disk-policy",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
       option :power,
@@ -59,7 +59,17 @@ class Chef
         :description => "The timezone for this UCS Domain",
         :proc => Proc.new { |f| Chef::Config[:knife][:timezone] = f }
 
+      option :localdiskpolicy,
+        :long => "--local-disk-policy POLICY",
+        :description => "The local disk policy to use <No Local Storage,Any Configuration, No Raid, Raid 1",
+        :proc => Proc.new { |f| Chef::Config[:knife][:localdiskpolicy] = f }
 
+
+      option :org,
+        :long => "--org ORG",
+        :description => "The organization to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
+        
       def run
         $stdout.sync = true
         
@@ -132,7 +142,28 @@ class Chef
           puts ''
           puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery"
           puts ''
-        end      
+        end
+
+      when 'local-disk-policy'
+        json = { :local_disk_policy => Chef::Config[:knife][:localdiskpolicy], :org => Chef::Config[:knife][:org] }.to_json
+        
+        xml_response = provisioner.set_local_disk_policy(json))
+        xml_doc = Nokogiri::XML(xml_response)
+          
+        xml_doc.xpath("configConfMos/outConfigs/pair/storageLocalDiskConfigPolicy").each do |localdiskpolicy|
+          puts ''
+          puts "Policy: #{ui.color("#{localdiskpolicy.attributes['mode']}", :blue)} status: #{ui.color("#{localdiskpolicy.attributes['status']}", :green)}"
+        end
+        
+        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+        xml_doc.xpath("configConfMos").each do |localdiskpolicy|
+           puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
+        end                    
+      else
+        puts ''
+        puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery,local-disk-policy"
+        puts ''
+      end      
         
       end
     end
