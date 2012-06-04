@@ -61,7 +61,7 @@ class Chef
 
       option :localdiskpolicy,
         :long => "--local-disk-policy POLICY",
-        :description => "The local disk policy to use <No Local Storage,Any Configuration, No Raid, Raid 1",
+        :description => "The local disk policy to use: No Local Storage,Any Configuration, No Raid, Raid 1",
         :proc => Proc.new { |f| Chef::Config[:knife][:localdiskpolicy] = f }
 
 
