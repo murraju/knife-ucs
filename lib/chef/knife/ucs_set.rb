@@ -138,32 +138,27 @@ class Chef
           xml_doc.xpath("configConfMos").each do |timezone|
              puts "#{timezone.attributes['errorCode']} #{ui.color("#{timezone.attributes['errorDescr']}", :red)}"
           end                    
+
+        when 'local-disk-policy'
+          json = { :local_disk_policy => Chef::Config[:knife][:localdiskpolicy], :org => Chef::Config[:knife][:org] }.to_json
+        
+          xml_response = provisioner.set_local_disk_policy(json))
+          xml_doc = Nokogiri::XML(xml_response)
+          
+          xml_doc.xpath("configConfMos/outConfigs/pair/storageLocalDiskConfigPolicy").each do |localdiskpolicy|
+            puts ''
+            puts "Policy: #{ui.color("#{localdiskpolicy.attributes['mode']}", :blue)} status: #{ui.color("#{localdiskpolicy.attributes['status']}", :green)}"
+          end
+        
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |localdiskpolicy|
+             puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
+          end                    
         else
           puts ''
-          puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery"
+          puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery,local-disk-policy"
           puts ''
-        end
-
-      when 'local-disk-policy'
-        json = { :local_disk_policy => Chef::Config[:knife][:localdiskpolicy], :org => Chef::Config[:knife][:org] }.to_json
-        
-        xml_response = provisioner.set_local_disk_policy(json))
-        xml_doc = Nokogiri::XML(xml_response)
-          
-        xml_doc.xpath("configConfMos/outConfigs/pair/storageLocalDiskConfigPolicy").each do |localdiskpolicy|
-          puts ''
-          puts "Policy: #{ui.color("#{localdiskpolicy.attributes['mode']}", :blue)} status: #{ui.color("#{localdiskpolicy.attributes['status']}", :green)}"
-        end
-        
-        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-        xml_doc.xpath("configConfMos").each do |localdiskpolicy|
-           puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
-        end                    
-      else
-        puts ''
-        puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery,local-disk-policy"
-        puts ''
-      end      
+        end      
         
       end
     end
