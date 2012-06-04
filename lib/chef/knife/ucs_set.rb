@@ -154,7 +154,7 @@ class Chef
           xml_doc.xpath("configConfMos").each do |localdiskpolicy|
              puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
           end
-                              
+          end                    
         else
           puts ''
           puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery,local-disk-policy"
