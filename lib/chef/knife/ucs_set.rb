@@ -139,7 +139,7 @@ class Chef
              puts "#{timezone.attributes['errorCode']} #{ui.color("#{timezone.attributes['errorDescr']}", :red)}"
           end                    
 
-        when 'local-disk-policy'
+        when 'localdiskpolicy'
           json = { :local_disk_policy => Chef::Config[:knife][:localdiskpolicy], :org => Chef::Config[:knife][:org] }.to_json
           
           xml_response = provisioner.set_local_disk_policy(json)
