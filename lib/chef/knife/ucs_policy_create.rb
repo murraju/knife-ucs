@@ -47,7 +47,7 @@ class Chef
       option :org,
         :long => "--org ORG",
         :description => "The organization to use",
-        :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
 
       option :hardwaremodel,
         :long => "--hardware-model MODEL",
