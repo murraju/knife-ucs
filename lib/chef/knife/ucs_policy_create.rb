@@ -75,9 +75,9 @@ class Chef
         policy = "#{Chef::Config[:knife][:policy]}".downcase
         case policy
         when 'host-firmware'
-          json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name], :hardware_model => Chef::Config[:knife][:hardwaremodel],
-                    :hardware_type => Chef::Config[:knife][:hardwaretype],  :hardware_vendor => Chef::Config[:knife][:hardware_vendor],
-                    :firwmare_version Chef::Config[:knife][:firwmare_version], :org => Chef::Config[:knife][:org]  }.to_json
+          json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name],   :hardware_model => Chef::Config[:knife][:hardwaremodel],
+                    :hardware_type => Chef::Config[:knife][:hardwaretype],    :hardware_vendor => Chef::Config[:knife][:hardware_vendor],
+                    :firwmare_version Chef::Config[:knife][:firwmareversion], :org => Chef::Config[:knife][:org]  }.to_json
                     
           puts provisioner.create_host_firmware_package(json)          
 
