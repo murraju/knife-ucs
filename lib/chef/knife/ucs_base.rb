@@ -54,6 +54,9 @@ class Chef
 
       def connection
         ucs_session = UCSToken.new
+        Chef::Log.debug("username: #{Chef::Config[:knife][:ucsm_username]}")
+        Chef::Log.debug("password: #{Chef::Config[:knife][:ucsm_password]}")
+        Chef::Log.debug("host:     #{Chef::Config[:knife][:ucsm_host]}")
         @connection ||= begin
           connection = ucs_session.get_token({
             :username => Chef::Config[:knife][:ucsm_username],
