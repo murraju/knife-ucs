@@ -61,7 +61,7 @@ class Chef
 
       option :localdiskpolicy,
         :long => "--local-disk-policy POLICY",
-        :description => "The local disk policy to use: No Local Storage,Any Configuration, No Raid, Raid 1",
+        :description => "The local disk policy to use: no-local-storage,any-configuration,no-raid,raid-1",
         :proc => Proc.new { |f| Chef::Config[:knife][:localdiskpolicy] = f }
 
 
@@ -142,20 +142,19 @@ class Chef
         when 'local-disk-policy'
           json = { :local_disk_policy => Chef::Config[:knife][:localdiskpolicy], :org => Chef::Config[:knife][:org] }.to_json
           
-          puts provisioner.set_local_disk_policy(json)
           
-          # xml_response = provisioner.set_local_disk_policy(json)
-          # xml_doc = Nokogiri::XML(xml_response)
-          #   
-          # xml_doc.xpath("configConfMos/outConfigs/pair/storageLocalDiskConfigPolicy").each do |localdiskpolicy|
-          #   puts ''
-          #   puts "Local Disk Policy: #{ui.color("#{localdiskpolicy.attributes['mode']}", :blue)} status: #{ui.color("#{localdiskpolicy.attributes['status']}", :green)}"
-          # end
-          # 
-          # #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
-          # xml_doc.xpath("configConfMos").each do |localdiskpolicy|
-          #    puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
-          # end
+          xml_response = provisioner.set_local_disk_policy(json)
+          xml_doc = Nokogiri::XML(xml_response)
+            
+          xml_doc.xpath("configConfMos/outConfigs/pair/storageLocalDiskConfigPolicy").each do |localdiskpolicy|
+            puts ''
+            puts "Local Disk Policy: #{ui.color("#{localdiskpolicy.attributes['mode']}", :blue)} status: #{ui.color("#{localdiskpolicy.attributes['status']}", :green)}"
+          end
+          
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          xml_doc.xpath("configConfMos").each do |localdiskpolicy|
+             puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
+          end
 
            
         else
