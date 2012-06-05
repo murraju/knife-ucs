@@ -76,7 +76,7 @@ class Chef
         case policy
         when 'host-firmware'
           json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name],            :hardware_model => Chef::Config[:knife][:hardwaremodel].to_s,
-                    :hardware_type => Chef::Config[:knife][:hardwaretype],             :hardware_vendor => Chef::Config[:knife][:hardware_vendor].to_s,
+                    :hardware_type => Chef::Config[:knife][:hardwaretype],             :hardware_vendor => Chef::Config[:knife][:hardwarevendor].to_s,
                     :firmare_version => Chef::Config[:knife][:firwmareversion].to_s,   :org => Chef::Config[:knife][:org]  }.to_json
                     
           puts provisioner.create_host_firmware_package(json)          
