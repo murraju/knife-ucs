@@ -77,11 +77,7 @@ class Chef
         when 'host-firmware'
           json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name],            :hardware_model => Chef::Config[:knife][:hardwaremodel].to_s,
                     :hardware_type => Chef::Config[:knife][:hardwaretype].to_s,        :hardware_vendor => Chef::Config[:knife][:hardwarevendor].to_s,
-                    :firmware_version => Chef::Config[:knife][:firmwareversion].to_s,  :org => Chef::Config[:knife][:org]  }.to_json
-          
-          # puts "Version is #{Chef::Config[:knife][:firmwareversion]}"
-          #           
-          # puts provisioner.create_host_firmware_package(json)          
+                    :firmware_version => Chef::Config[:knife][:firmwareversion].to_s,  :org => Chef::Config[:knife][:org]  }.to_json       
 
 
           xml_response = provisioner.create_host_firmware_package(json)
