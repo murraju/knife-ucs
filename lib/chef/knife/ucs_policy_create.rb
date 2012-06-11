@@ -44,6 +44,11 @@ class Chef
         :description => "The policy name",
         :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
 
+      option :config,
+        :long => "--config CONFIG",
+        :description => "The JSON config file to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
+
       option :org,
         :long => "--org ORG",
         :description => "The organization to use",
