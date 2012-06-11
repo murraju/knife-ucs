@@ -52,7 +52,7 @@ class Chef
       option :org,
         :long => "--org ORG",
         :description => "The organization to use",
-        :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
 
       option :hardwaremodel,
         :long => "--hardware-model MODEL",
@@ -80,25 +80,40 @@ class Chef
         policy = "#{Chef::Config[:knife][:policy]}".downcase
         case policy
         when 'host-firmware'
+<<<<<<< HEAD
           json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name],             :hardware_model => Chef::Config[:knife][:hardwaremodel].to_s,
                     :hardware_type => Chef::Config[:knife][:hardwaretype],              :hardware_vendor => Chef::Config[:knife][:hardware_vendor].to_s,
                     :firmware_version => Chef::Config[:knife][:firmwareversion].to_s,   :org => Chef::Config[:knife][:org]  }.to_json        
+=======
+          json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name],            :hardware_model => Chef::Config[:knife][:hardwaremodel].to_s,
+                    :hardware_type => Chef::Config[:knife][:hardwaretype].to_s,        :hardware_vendor => Chef::Config[:knife][:hardwarevendor].to_s,
+                    :firmware_version => Chef::Config[:knife][:firmwareversion].to_s,  :org => Chef::Config[:knife][:org]  }.to_json       
+
+>>>>>>> 85c9ca638740d222c9fb08c1859c7a03c590f453
 
           xml_response = provisioner.create_host_firmware_package(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/firmwareComputeHostPack").each do |hostfw|
             puts ''
+<<<<<<< HEAD
             puts "Host Firmware Pack: #{ui.color("#{hostfw.attributes['name']}", :blue)}" + 
                   " status: #{ui.color("#{ippool.attributes['status']}", :green)}"
           end
           
+=======
+            puts "Host Firmware Package: #{ui.color("#{hostfw.attributes['name']}", :blue)}" + 
+                  " status: #{ui.color("#{hostfw.attributes['status']}", :green)}"
+          end
+          
+          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+>>>>>>> 85c9ca638740d222c9fb08c1859c7a03c590f453
           xml_doc.xpath("configConfMos").each do |hostfw|
              puts "#{hostfw.attributes['errorCode']} #{ui.color("#{hostfw.attributes['errorDescr']}", :red)}"
           end
           
         else
-          puts "Incorrect options. Please make sure you are using one of the following: "
+          puts "Incorrect options. Please make sure you are using one of the following: host-firmware"
         end     
         
       end
