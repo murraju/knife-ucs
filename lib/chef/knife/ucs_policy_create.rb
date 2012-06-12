@@ -92,7 +92,7 @@ class Chef
           xml_doc.xpath("configConfMos/outConfigs/pair/firmwareComputeHostPack").each do |hostfw|
             puts ''
             puts "Host Firmware Pack: #{ui.color("#{hostfw.attributes['name']}", :blue)}" + 
-                  " status: #{ui.color("#{ippool.attributes['status']}", :green)}"
+                  " status: #{ui.color("#{hostfw.attributes['status']}", :green)}"
           end
           
           xml_doc.xpath("configConfMos").each do |hostfw|
