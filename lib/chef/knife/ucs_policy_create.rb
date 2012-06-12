@@ -49,10 +49,10 @@ class Chef
         :description => "The JSON config file to use",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
-      option :update,
-        :short => "U",
-        :description => "Update flag",
-        :proc => Proc.new { |f| Chef::Config[:knife][:update] = f }
+      option :modify,
+        :short => "M",
+        :description => "modify flag",
+        :proc => Proc.new { |f| Chef::Config[:knife][:modify] = f }
 
 
       option :org,
