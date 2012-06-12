@@ -79,6 +79,12 @@ class Chef
           provisioner = UCSProvision.new(connection)
         end 
       end
+
+      def updater
+        @updater ||= begin
+          updater = UCSUpdate.new(connection)
+        end 
+      end
       
       def destroyer
         @destroyer ||= begin
