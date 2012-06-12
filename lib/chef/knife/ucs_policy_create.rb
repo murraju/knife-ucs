@@ -65,7 +65,7 @@ class Chef
         :proc => Proc.new { |f| Chef::Config[:knife][:hardwarevendor] = f }
 
       option :firmwareversion,
-        :long => "--firmware-version VENDOR",
+        :long => "--firmware-version VERSION",
         :description => "The firmware version used with firmware policies",
         :proc => Proc.new { |f| Chef::Config[:knife][:firmwareversion] = f }
 
