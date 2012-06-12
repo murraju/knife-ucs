@@ -36,7 +36,7 @@ class Chef
 
       option :policy,
         :long => "--policy-type POLICY",
-        :description => "The policy type <boot,hostfirmware,managementfirmware>",
+        :description => "The policy type <boot,host-firmware,mgmt-firmware>",
         :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
 
       option :name,
@@ -100,7 +100,7 @@ class Chef
           end
           
         else
-          puts "Incorrect options. Please make sure you are using one of the following: host-firmware"
+          puts "Incorrect options. Please make sure you are using one of the following: host-firmware, mgmt-firmware"
         end     
         
       end
