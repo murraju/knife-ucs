@@ -19,7 +19,7 @@ require 'chef/knife/ucs_base'
 
 class Chef
   class Knife
-    class UcsVlansCreate < Knife
+    class UcsVlanCreate < Knife
 
       include Knife::UCSBase
 
