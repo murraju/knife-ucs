@@ -30,17 +30,17 @@ class Chef
         Chef::Knife::Bootstrap.load_deps
       end
 
-      banner "knife ucs vlans create (options)"
+      banner "knife ucs vlan create (options)"
 
       attr_accessor :initial_sleep_delay
 
       option :vlanid,
-        :long => "--vlanid VLANID",
+        :long => "--vlan-id VLANID",
         :description => "The VLAN ID",
         :proc => Proc.new { |f| Chef::Config[:knife][:vlanid] = f }
 
       option :vlanname,
-        :long => "--vlanname VLANNAME",
+        :long => "--vlan-name VLANNAME",
         :description => "The VLAN NAME",
         :proc => Proc.new { |f| Chef::Config[:knife][:vlanname] = f }
 
