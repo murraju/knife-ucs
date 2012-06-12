@@ -39,46 +39,17 @@ class Chef
         :description => "The policy type <boot,host-firmware,mgmt-firmware>",
         :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
 
-      option :name,
-        :long => "--policy-name POLICYNAME",
-        :description => "The policy name",
-        :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
-
+      option :org,
+        :long => "--org ORG",
+        :description => "The organization to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
+        
       option :config,
         :long => "--config CONFIG",
         :description => "The JSON config file to use",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
-      option :modify,
-        :short => "-M MODIFY",
-        :description => "Set the modify flag",
-        :proc => Proc.new { |f| Chef::Config[:knife][:modify] = f }
 
-
-      option :org,
-        :long => "--org ORG",
-        :description => "The organization to use",
-        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
-
-      option :hardwaremodel,
-        :long => "--hardware-model MODEL",
-        :description => "The hardware model",
-        :proc => Proc.new { |f| Chef::Config[:knife][:hardwaremodel] = f }
-
-      option :hardwaretype,
-        :long => "--hardware-type TYPE",
-        :description => "The hardware type",
-        :proc => Proc.new { |f| Chef::Config[:knife][:hardwaretype] = f }
-
-      option :hardwarevendor,
-        :long => "--hardware-vendor VENDOR",
-        :description => "The hardware vendor",
-        :proc => Proc.new { |f| Chef::Config[:knife][:hardwarevendor] = f }
-
-      option :firmwareversion,
-        :long => "--firmware-version VERSION",
-        :description => "The firmware version",
-        :proc => Proc.new { |f| Chef::Config[:knife][:firmwareversion] = f }
 
       def run
         $stdout.sync = true
@@ -86,10 +57,8 @@ class Chef
         policy = "#{Chef::Config[:knife][:policy]}".downcase
         case policy
         when 'host-firmware'
-
-          json = {  :host_firmware_pkg_name => Chef::Config[:knife][:name],            :hardware_model => Chef::Config[:knife][:hardwaremodel].to_s,
-                    :hardware_type => Chef::Config[:knife][:hardwaretype].to_s,        :hardware_vendor => Chef::Config[:knife][:hardwarevendor].to_s,
-                    :firmware_version => Chef::Config[:knife][:firmwareversion].to_s,  :org => Chef::Config[:knife][:org]  }.to_json       
+        
+          
 
 
           xml_response = provisioner.create_host_firmware_package(json)
