@@ -51,7 +51,7 @@ class Chef
 
       option :modify,
         :short => "-M MODIFY",
-        :description => "modify flag",
+        :description => "Set the modify flag",
         :proc => Proc.new { |f| Chef::Config[:knife][:modify] = f }
 
 
