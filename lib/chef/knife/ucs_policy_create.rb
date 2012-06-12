@@ -39,11 +39,6 @@ class Chef
         :description => "The policy type <boot,host-firmware,mgmt-firmware>",
         :proc => Proc.new { |f| Chef::Config[:knife][:policy] = f }
 
-      option :org,
-        :long => "--org ORG",
-        :description => "The organization to use",
-        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
-        
       option :config,
         :long => "--config CONFIG",
         :description => "The JSON config file to use",
