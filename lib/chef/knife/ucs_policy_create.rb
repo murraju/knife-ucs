@@ -82,7 +82,7 @@ class Chef
                    :hardware_type => Chef::Config[:knife][:hardwaretype].to_s,  :hardware_vendor => Chef::Config[:knife][:hardwarevendor].to_s, 
                    :firmware_version => Chef::Config[:knife][:firmwareversion].to_s, :org => Chef::Config[:knife][:org] }.to_json
 
-          xml_response = provisioner.create_host_firmware_package(json)
+          xml_response = provisioner.set_host_firmware_package(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/firmwareComputeHostPack").each do |hostfw|
