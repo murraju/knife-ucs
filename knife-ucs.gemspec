@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri", "~> 1.5.2"
   s.add_dependency "rest-client", "~> 1.6.7"
   s.add_dependency "ucslib", "~> 0.1.1"
-  s.add_dependency "chef", "~>0.10.10"
+  s.add_dependency "chef", "~>10.16.2"
 end
