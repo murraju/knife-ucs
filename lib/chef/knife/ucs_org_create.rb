@@ -44,7 +44,7 @@ class Chef
       def run
         $stdout.sync = true
         
-        xml_response = provisioner.create_org({:org => Chef::Config[:knife][:org]}.to_json)
+        xml_response = provisioner.set_org({:org => Chef::Config[:knife][:org]}.to_json)
         xml_doc = Nokogiri::XML(xml_response)
         
         xml_doc.xpath("configConfMos/outConfigs/pair/orgOrg").each do |org|

@@ -41,6 +41,8 @@ Example usage can be found here -> https://github.com/murraju/knife-ucs/wiki
 
 Author:: Murali Raju <murali.raju@appliv.com>
 
+Author:: Velankani Engineering Team <eng@velankani.net>
+
 Copyright:: Copyright (c) 2012 Murali Raju.
 
 License:: Apache License, Version 2.0
