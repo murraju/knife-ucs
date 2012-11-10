@@ -79,7 +79,7 @@ class Chef
           json = { :start_ip => Chef::Config[:knife][:start],   :end_ip => Chef::Config[:knife][:end],
                    :subnet_mask => Chef::Config[:knife][:mask], :gateway => Chef::Config[:knife][:gateway] }.to_json
           
-          xml_response = provisioner.create_management_ip_pool(json)
+          xml_response = provisioner.set_management_ip_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
   
           xml_doc.xpath("configConfMos/outConfigs/pair/ippoolBlock").each do |ippool|
@@ -97,7 +97,7 @@ class Chef
           json =  { :mac_pool_name => Chef::Config[:knife][:name],  :mac_pool_start => Chef::Config[:knife][:start], 
                     :mac_pool_end => Chef::Config[:knife][:end],    :org => Chef::Config[:knife][:org] }.to_json
           
-          xml_response = provisioner.create_mac_pool(json)
+          xml_response = provisioner.set_mac_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
   
           xml_doc.xpath("configConfMos/outConfigs/pair/macpoolPool").each do |macpool|
@@ -115,7 +115,7 @@ class Chef
           json =  { :wwnn_name => Chef::Config[:knife][:name],  :wwnn_from => Chef::Config[:knife][:start], 
                     :wwnn_to => Chef::Config[:knife][:end],     :org => Chef::Config[:knife][:org] }.to_json
           
-          xml_response = provisioner.create_wwnn_pool(json)
+          xml_response = provisioner.set_wwnn_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
             
           xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwnn|
@@ -134,7 +134,7 @@ class Chef
           json =  { :wwpn_name => Chef::Config[:knife][:name],  :wwpn_from => Chef::Config[:knife][:start], 
                     :wwpn_to => Chef::Config[:knife][:end],     :org => Chef::Config[:knife][:org] }.to_json
         
-          xml_response = provisioner.create_wwpn_pool(json)
+          xml_response = provisioner.set_wwpn_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/fcpoolInitiators").each do |wwpn|
@@ -152,7 +152,7 @@ class Chef
           json =  { :uuid_pool_name => Chef::Config[:knife][:name], :uuid_from => Chef::Config[:knife][:start], 
                     :uuid_to => Chef::Config[:knife][:end],         :org => Chef::Config[:knife][:org] }.to_json
         
-          xml_response = provisioner.create_uuid_pool(json)
+          xml_response = provisioner.set_uuid_pool(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/uuidpoolPool").each do |uuid|

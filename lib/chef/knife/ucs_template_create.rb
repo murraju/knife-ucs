@@ -90,7 +90,7 @@ class Chef
                    :switch => Chef::Config[:knife][:fabric], :org => Chef::Config[:knife][:org], :vnic_template_VLANs => Chef::Config[:knife][:vlans],
                    :vnic_template_native_VLAN => Chef::Config[:knife][:native], :vnic_template_mtu => Chef::Config[:knife][:mtu] }.to_json
           
-          xml_response = provisioner.create_vnic_template(json)
+          xml_response = provisioner.set_vnic_template(json)
           xml_doc = Nokogiri::XML(xml_response)
 
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicLanConnTempl").each do |vnic|
@@ -110,8 +110,8 @@ class Chef
                    :switch => Chef::Config[:knife][:fabric], :vsan_name => Chef::Config[:knife][:vsan], :org => Chef::Config[:knife][:org] }.to_json       
                		
                		
-          #puts provisioner.create_vhba_template(json)
-          xml_response = provisioner.create_vhba_template(json)
+          #puts provisioner.set_vhba_template(json)
+          xml_response = provisioner.set_vhba_template(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicSanConnTempl").each do |vnic|
@@ -148,8 +148,8 @@ class Chef
                    # org                                         = JSON.parse(json)['org'].to_s
                    #                    
                		
-          #puts provisioner.create_vhba_template(json)
-          xml_response = provisioner.create_vhba_template(json)
+          #puts provisioner.set_vhba_template(json)
+          xml_response = provisioner.set_vhba_template(json)
           xml_doc = Nokogiri::XML(xml_response)
           
           xml_doc.xpath("configConfMos/outConfigs/pair/vnicSanConnTempl").each do |vnic|
