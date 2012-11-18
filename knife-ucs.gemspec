@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.md", "LICENSE" ]
   s.authors     = ["Murali Raju"]
-  s.email       = ["murraju@appliv.com"]
+  s.email       = ["murraju@appliv.com", "murali.raju@velankani.net"]
   s.homepage    = "https://github.com/murraju/knife-ucs"
   s.summary     = %q{Cisco UCS Support for Chef's Knife Command}
   s.description = s.summary
@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri", "~> 1.5.2"
   s.add_dependency "rest-client", "~> 1.6.7"
   s.add_dependency "ucslib", "~> 0.1.1"
-  s.add_dependency "chef", "~>0.10.10"
+  s.add_dependency "chef", "~>10.16.2"
 end
