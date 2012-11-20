@@ -1,4 +1,4 @@
-Knife UCS (alpha)
+Knife UCS (beta)
 ===============
 
 This is a Chef Knife plugin for Cisco UCS inspired by knife-openstack (Matt Ray @Opscode). This plugin gives knife the ability to provision, list, and manage Cisco UCS. It leverages UCSlib (http://github.com/velankanisys/ucslib). 
@@ -44,6 +44,7 @@ Author:: Murali Raju <murali.raju@appliv.com>
 Author:: Velankani Engineering Team <eng@velankani.net>
 
 Copyright:: Copyright (c) 2012 Murali Raju.
+Copyright:: Copyright (c) Velankani Information Systems, Inc.
 
 License:: Apache License, Version 2.0
 
