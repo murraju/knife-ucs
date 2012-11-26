@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.md", "LICENSE" ]
-  s.authors     = ["Murali Raju"]
+  s.authors     = ["Murali Raju", "Velankani Engineering"]
   s.email       = ["murraju@appliv.com", "eng@velankani.net"]
-  s.homepage    = "https://github.com/murraju/knife-ucs"
+  s.homepage    = "https://github.com/velankanisys/knife-ucs"
   s.summary     = %q{Cisco UCS Support for Chef's Knife Command}
   s.description = s.summary
 
