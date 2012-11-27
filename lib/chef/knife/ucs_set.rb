@@ -88,7 +88,7 @@ class Chef
             puts "NTP Server: #{ui.color("#{ntp.attributes['name']}", :blue)} status: #{ui.color("#{ntp.attributes['status']}", :green)}"
           end
 
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |ntp|
              puts "#{ntp.attributes['errorCode']} #{ui.color("#{ntp.attributes['errorDescr']}", :red)}"
           end
@@ -104,7 +104,7 @@ class Chef
             puts "Power Policy: #{ui.color("#{power.attributes['name']}", :blue)} status: #{ui.color("#{power.attributes['status']}", :green)}"
           end
           
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |power|
              puts "#{power.attributes['errorCode']} #{ui.color("#{power.attributes['errorDescr']}", :red)}"
           end          
@@ -120,7 +120,7 @@ class Chef
             puts "Chassis Discovery Policy: #{ui.color("#{chassis.attributes['action']}", :blue)} status: #{ui.color("#{chassis.attributes['status']}", :green)}"
           end
           
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |chassis|
              puts "#{chassis.attributes['errorCode']} #{ui.color("#{chassis.attributes['errorDescr']}", :red)}"
           end
@@ -136,7 +136,7 @@ class Chef
             puts "Timezone: #{ui.color("#{timezone.attributes['timezone']}", :blue)} status: #{ui.color("#{timezone.attributes['status']}", :green)}"
           end
           
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |timezone|
              puts "#{timezone.attributes['errorCode']} #{ui.color("#{timezone.attributes['errorDescr']}", :red)}"
           end                    
@@ -153,7 +153,7 @@ class Chef
             puts "Local Disk Policy: #{ui.color("#{localdiskpolicy.attributes['mode']}", :blue)} status: #{ui.color("#{localdiskpolicy.attributes['status']}", :green)}"
           end
           
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |localdiskpolicy|
              puts "#{localdiskpolicy.attributes['errorCode']} #{ui.color("#{localdiskpolicy.attributes['errorDescr']}", :red)}"
           end
