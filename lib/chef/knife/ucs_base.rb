@@ -82,9 +82,10 @@ class Chef
         end 
       end
 
-      def updater
-        @updater ||= begin
-          updater = UCSUpdate.new(connection)
+      def manager
+        ucs_manager = UCSManage.new(connection)
+        @manager ||= begin
+          manager = ucs_manager.discover_state
         end 
       end
       
