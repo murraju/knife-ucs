@@ -25,53 +25,84 @@ class Chef
 
       include Knife::UCSBase
 
-      banner "knife ucs pool list"
+      banner "knife ucs pool list (options)"
+
+      attr_accessor :initial_sleep_delay
+
+      option :type,
+        :long => "--pool-type POOLTYPE",
+        :description => "The policy type <mac,uuid,wwpn,wwnn>",
+        :proc => Proc.new { |f| Chef::Config[:knife][:type] = f }
+
+      option :org,
+        :long => "--org ORG",
+        :description => "The organization to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
+
+      option :name,
+        :long => "--policy-name POLICYNAME",
+        :description => "The policy name to use",
+        :proc => Proc.new { |f| Chef::Config[:knife][:name] = f }
+
 
       def run
+        $stdout.sync = true
       
-       #Using Chef's UI (much better looking:)) instead of list methods provided by ucslib.
-       
-      macpool_list = [
-         ui.color('Mac Address',    :bold),
-         ui.color('Assigned To',    :bold),
-         ui.color('vNIC',           :bold),
-         ui.color('Assigned',       :bold)
-       ]
-       
-      manager.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
-         macpool_list << "#{macpool.attributes["id"]}"
-         extracted_service_profile_names = "#{macpool.attributes["assignedToDn"]}"
-         service_profile_names = extracted_service_profile_names.to_s.scan(/ls-(\w+)/)
-         service_profile_names.each do |service_profile_name|
-          hostnames = service_profile_name
-          hostnames.each do |host_name|
-            @host = host_name
+        #Using Chef's UI (much better looking:)) instead of list methods provided by ucslib.
+        pool_type = "#{Chef::Config[:knife][:type]}".downcase
+        case pool_type
+        when 'mac' 
+          macpool_list = [
+             ui.color('Organization',   :bold),
+             ui.color('Mac Address',    :bold),
+             ui.color('Assigned To',    :bold),
+             ui.color('vNIC',           :bold),
+             ui.color('Assigned',       :bold)
+           ]
+           
+          manager.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
+            extracted_org_names = "#{macpool.attributes["assignedToDn"]}"
+            org_names = extracted_org_names.to_s.scan(/\/(org-\w+)/)
+            org_names.each do |orgs| #Ugly...refactor
+              orgs.each do |org|
+                @org = org
+              end
+            end
+            macpool_list << "#{@org}"
+            macpool_list << "#{macpool.attributes["id"]}"
+            extracted_service_profile_names = "#{macpool.attributes["assignedToDn"]}"
+            service_profile_names = extracted_service_profile_names.to_s.scan(/ls-(\w+)/)
+            service_profile_names.each do |service_profile_name| #Ugly...refactor
+            hostnames = service_profile_name
+            hostnames.each do |host_name|
+                  @host = host_name
+                end
+            end
+            vnics = extracted_service_profile_names.to_s.scan(/ether-vNIC-(\w+)/)
+            vnics.each do |vnic| #Ugly...refactor
+              assgined_vnics = vnic
+              assgined_vnics.each do |vnic|
+                @vnic = vnic
+              end
+            end
+            macpool_list << "#{@host}"
+            macpool_list << "#{@vnic}"
+            macpool_list << begin
+              state = "#{macpool.attributes["assigned"]}"
+              case state
+              when 'yes'
+                 ui.color(state, :green)
+              when 'assigning'
+                 ui.color(state, :yellow)
+              else
+                 ui.color(state, :red)
+              end
+            end
           end
-         end
-         vnics = extracted_service_profile_names.to_s.scan(/ether-vNIC-(\w+)/)
-         vnics.each do |vnic|
-          assgined_vnics = vnic
-          assgined_vnics.each do |vnic|
-            @vnic = vnic
-          end
-         end
-         macpool_list << "#{@host}"
-         macpool_list << "#{@vnic}"
-         macpool_list << begin
-           state = "#{macpool.attributes["assigned"]}"
-           case state
-           when 'yes'
-             ui.color(state, :green)
-           when 'assigning'
-             ui.color(state, :yellow)
-           else
-             ui.color(state, :red)
-           end
-         end
-       end
-       puts ui.list(macpool_list, :uneven_columns_across, 4)        
-        
-        
+          puts ui.list(macpool_list, :uneven_columns_across, 5)
+        else
+          puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn"        
+        end       
       end
     end
   end
