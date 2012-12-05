@@ -40,9 +40,23 @@ class Chef
        
       manager.xpath("configResolveClasses/outConfigs/macpoolPooled").each do |macpool|
          macpool_list << "#{macpool.attributes["id"]}"
-         service_profile_name = "#{macpool.attributes["assignedToDn"].to_s.scan(/ls-(\w+)/)}"
-         macpool_list << "#{service_profile_name[0][0]}"
-         macpool_list << "#{macpool.attributes["assignedToDn"].to_s.scan(/ether-vNIC-(\w+)/)}"
+         extracted_service_profile_names = "#{macpool.attributes["assignedToDn"]}"
+         service_profile_names = extracted_service_profile_names.to_s.scan(/ls-(\w+)/)
+         service_profile_names.each do |service_profile_name|
+          hostnames = service_profile_name
+          hostnames.each do |host_name|
+            @host = host_name
+          end
+         end
+         vnics = extracted_service_profile_names.to_s.scan(/ether-vNIC-(\w+)/)
+         vnics.each do |vnic|
+          assgined_vnics = vnic
+          assgined_vnics.each do |vnic|
+            @vnic = vnic
+          end
+         end
+         macpool_list << "#{@host}"
+         macpool_list << "#{@vnic}"
          macpool_list << begin
            state = "#{macpool.attributes["assigned"]}"
            case state
