@@ -51,6 +51,46 @@ class Chef
         #Using Chef's UI (much better looking:)) instead of list methods provided by ucslib.
         pool_type = "#{Chef::Config[:knife][:type]}".downcase
         case pool_type
+        when 'uuid'
+          uuidpool_list = [
+            ui.color('Organization', :bold),
+            ui.color('UUID Suffix',  :bold),
+            ui.color('Assigned To',  :bold),
+            ui.color('Assigned',     :bold)
+          ]
+          manager.xpath("configResolveClasses/outConfigs/uuidpoolPooled").each do |uuidpool|
+            extracted_org_names = "#{uuidpool.attributes["assignedToDn"]}"
+            org_names = extracted_org_names.to_s.scan(/\/(org-\w+)/)
+            org_names.each do |orgs| #Ugly...refactor
+              orgs.each do |org|
+                @org = org
+              end
+            end
+            uuidpool_list << "#{@org}"
+            uuidpool_list << "#{uuidpool.attributes["id"]}"
+            extracted_service_profile_names = "#{uuidpool.attributes["assignedToDn"]}"
+            service_profile_names = extracted_service_profile_names.to_s.scan(/ls-(\w+)/)
+            service_profile_names.each do |service_profile_name| #Ugly...refactor
+            hostnames = service_profile_name
+            hostnames.each do |host_name|
+                  @host = host_name
+                end
+            end
+            uuidpool_list << "#{@host}"
+            uuidpool_list << begin
+              state = "#{uuidpool.attributes["assigned"]}"
+              case state
+              when 'yes'
+                 ui.color(state, :green)
+              when 'assigning'
+                 ui.color(state, :yellow)
+              else
+                 ui.color(state, :red)
+              end        
+          end
+        end
+          puts ui.list(uuidpool_list, :uneven_columns_across, 4)
+          
         when 'mac' 
           macpool_list = [
              ui.color('Organization',   :bold),
