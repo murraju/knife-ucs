@@ -51,6 +51,46 @@ class Chef
         #Using Chef's UI (much better looking:)) instead of list methods provided by ucslib.
         pool_type = "#{Chef::Config[:knife][:type]}".downcase
         case pool_type
+        when 'wwpn'
+          wwpnpool_list = [
+            ui.color('Organization', :bold),
+            ui.color('WWPN',         :bold),
+            ui.color('Assigned To',  :bold),
+            ui.color('Assigned',     :bold)
+          ]
+          manager.xpath("configResolveClasses/outConfigs/fcpoolInitiator").each do |wwpnpool|
+            extracted_org_names = "#{wwpnpool.attributes["assignedToDn"]}"
+            org_names = extracted_org_names.to_s.scan(/\/(org-\w+)/)
+            org_names.each do |orgs| #Ugly...refactor
+              orgs.each do |org|
+                @org = org
+              end
+            end
+            wwpnpool_list << "#{@org}"
+            wwpnpool_list << "#{wwpnpool.attributes["id"]}"
+            extracted_service_profile_names = "#{wwpnpool.attributes["assignedToDn"]}"
+            service_profile_names = extracted_service_profile_names.to_s.scan(/ls-(\w+)/)
+            service_profile_names.each do |service_profile_name| #Ugly...refactor
+            hostnames = service_profile_name
+            hostnames.each do |host_name|
+                  @host = host_name
+                end
+            end
+            wwpnpool_list << "#{@host}"
+            wwpnpool_list << begin
+              state = "#{wwpnpool.attributes["assigned"]}"
+              case state
+              when 'yes'
+                 ui.color(state, :green)
+              when 'assigning'
+                 ui.color(state, :yellow)
+              else
+                 ui.color(state, :red)
+              end        
+          end
+        end
+          puts ui.list(wwpnpool_list, :uneven_columns_across, 4)
+
         when 'uuid'
           uuidpool_list = [
             ui.color('Organization', :bold),
@@ -90,7 +130,7 @@ class Chef
           end
         end
           puts ui.list(uuidpool_list, :uneven_columns_across, 4)
-          
+
         when 'mac' 
           macpool_list = [
              ui.color('Organization',   :bold),
@@ -141,7 +181,7 @@ class Chef
           end
           puts ui.list(macpool_list, :uneven_columns_across, 5)
         else
-          puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn,wwnn"        
+          puts "Incorrect options. Please make sure you are using one of the following: mac,uuid,wwpn"        
         end       
       end
     end
