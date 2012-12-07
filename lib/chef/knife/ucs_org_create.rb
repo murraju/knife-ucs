@@ -54,7 +54,7 @@ class Chef
             puts "Org: #{ui.color("#{org.attributes['name']}", :blue)} status: #{ui.color("#{org.attributes['status']}", :green)}"
         end
 
-        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+        
         xml_doc.xpath("configConfMos").each do |org|
            puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
         end

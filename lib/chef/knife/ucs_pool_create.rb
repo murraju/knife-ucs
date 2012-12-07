@@ -89,7 +89,7 @@ class Chef
                   " status: #{ui.color("#{ippool.attributes['status']}", :green)}"
           end
 
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |ippool|
              puts "#{ippool.attributes['errorCode']} #{ui.color("#{ippool.attributes['errorDescr']}", :red)}"
           end
@@ -107,7 +107,7 @@ class Chef
                   " status: #{ui.color("#{macpool.attributes['status']}", :green)}"
           end
 
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |macpool|
              puts "#{macpool.attributes['errorCode']} #{ui.color("#{macpool.attributes['errorDescr']}", :red)}"
           end          
@@ -125,7 +125,7 @@ class Chef
                   " status: #{ui.color("#{wwnn.attributes['status']}", :green)}"
           end
           
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |wwnn|
              puts "#{wwnn.attributes['errorCode']} #{ui.color("#{wwnn.attributes['errorDescr']}", :red)}"
           end
@@ -144,7 +144,7 @@ class Chef
                   " status: #{ui.color("#{wwpn.attributes['status']}", :green)}"
           end
         
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |wwpn|
              puts "#{wwpn.attributes['errorCode']} #{ui.color("#{wwpn.attributes['errorDescr']}", :red)}"
           end
@@ -162,7 +162,7 @@ class Chef
                   " status: #{ui.color("#{uuid.attributes['status']}", :green)}"
           end
         
-          #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+          
           xml_doc.xpath("configConfMos").each do |uuid|
              puts "#{uuid.attributes['errorCode']} #{ui.color("#{uuid.attributes['errorDescr']}", :red)}"
           end
