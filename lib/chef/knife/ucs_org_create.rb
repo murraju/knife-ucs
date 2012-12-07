@@ -1,5 +1,7 @@
 # Author:: Murali Raju (<murali.raju@appliv.com>)
+# Author:: Velankani Engineering <eng@velankani.net>
 # Copyright:: Copyright (c) 2012 Murali Raju.
+# Copyright:: Copyright (c) 2012 Velankani Information Systems, Inc
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,7 +54,7 @@ class Chef
             puts "Org: #{ui.color("#{org.attributes['name']}", :blue)} status: #{ui.color("#{org.attributes['status']}", :green)}"
         end
 
-        #Ugly...refactor later to parse error with better exception handling. Nokogiri xpath search for elements might be an option
+        
         xml_doc.xpath("configConfMos").each do |org|
            puts "#{org.attributes['errorCode']} #{ui.color("#{org.attributes['errorDescr']}", :red)}"
         end
