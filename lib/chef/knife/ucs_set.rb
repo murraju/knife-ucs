@@ -38,7 +38,7 @@ class Chef
 
       option :config,
         :long => "--config-item CONFIGIETM",
-        :description => "The item to configure which includes ntp, timezone, power, chassis-discovery, local-disk-policy",
+        :description => "The item to configure which includes syslog, ntp, timezone, power, chassis-discovery, local-disk-policy",
         :proc => Proc.new { |f| Chef::Config[:knife][:config] = f }
 
       option :power,
@@ -73,17 +73,17 @@ class Chef
         :proc => Proc.new { |f| Chef::Config[:knife][:org] = f }
  
        option :syslogserver,
-        :long => "--syslog-server SYSLOG-SERVER",
-        :description => "The syslog server to use",
+        :long => "--syslog-server SYSLOGSERVER",
+        :description => "The syslog server to use <hostname or IP>",
         :proc => Proc.new { |f| Chef::Config[:knife][:syslogserver] = f }
 
        option :syslogfacility,
-        :long => "--syslog-facility SYSLOG-FACILITY",
-        :description => "The syslog facility to use <Local0-Local7>",
+        :long => "--syslog-facility SYSLOGFACILITY",
+        :description => "The syslog facility to use <local0-local7>",
         :proc => Proc.new { |f| Chef::Config[:knife][:syslogfacility] = f }
 
        option :syslogseverity,
-        :long => "--syslog-severity SYSLOG-SEVERITY",
+        :long => "--syslog-severity SYSLOGSEVERITY",
         :description => "The syslog severity level to use <debugging,emergencies,information,alerts,warnings,errors,critical>",
         :proc => Proc.new { |f| Chef::Config[:knife][:syslogseverity] = f }
 
@@ -92,7 +92,7 @@ class Chef
         
         config_item = "#{Chef::Config[:knife][:config]}".downcase
         case config_item
-        when 'syslogserver'
+        when 'syslog'
           json = { :syslog_server => Chef::Config[:knife][:syslogserver],
                    :facility => Chef::Config[:knife][:syslogfacility],
                    :severity => Chef::Config[:knife][:syslogseverity] }.to_json
@@ -106,8 +106,8 @@ class Chef
           end
 
           
-          xml_doc.xpath("configConfMos").each do |ntp|
-             puts "#{ntp.attributes['errorCode']} #{ui.color("#{ntp.attributes['errorDescr']}", :red)}"
+          xml_doc.xpath("configConfMos").each do |syslog|
+             puts "#{syslog.attributes['errorCode']} #{ui.color("#{syslog.attributes['errorDescr']}", :red)}"
           end
 
         when 'ntp'
@@ -194,7 +194,7 @@ class Chef
            
         else
           puts ''
-          puts "Incorrect options. Please make sure you are using one of the following: ntp,timezone,power,chassis-discovery,local-disk-policy"
+          puts "Incorrect options. Type --help to list options"
           puts ''
         end      
       end
