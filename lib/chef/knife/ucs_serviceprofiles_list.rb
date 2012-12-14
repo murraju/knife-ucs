@@ -33,7 +33,7 @@ class Chef
        
        serviceprofile_list = [
          ui.color('Name',           :bold),
-         ui.color('Path',           :bold),
+         ui.color('Organization',   :bold),
          ui.color('UUID',           :bold),
          ui.color('BootPolicy',     :bold),
          ui.color('State',          :bold),
@@ -41,22 +41,36 @@ class Chef
        ]
        
        inventory.xpath("configResolveClasses/outConfigs/lsServer").each do |serviceprofile|
-         serviceprofile_list << "#{serviceprofile.attributes["name"]}"
-         serviceprofile_list << "#{serviceprofile.attributes["dn"]}"
-         serviceprofile_list << "#{serviceprofile.attributes["uuid"]}"
-         serviceprofile_list << "#{serviceprofile.attributes["operBootPolicyName"]}"
-         serviceprofile_list << "#{serviceprofile.attributes["operState"]}"
-         serviceprofile_list << begin
-           state = "#{serviceprofile.attributes["assocState"]}"
-           case state
-           when 'associated'
-             ui.color(state, :green)
-           when 'associating'
-             ui.color(state, :yellow)
-           else
-             ui.color(state, :red)
-           end
+        extracted_org_names = "#{serviceprofile.attributes["dn"]}"
+        org_names = extracted_org_names.to_s.scan(/\/(org-\w+)/)
+        org_names.each do |orgs| #Ugly...refactor
+          orgs.each do |org|
+            @org = org
+          end
+        end
+        serviceprofile_list << "#{serviceprofile.attributes["name"]}"
+        serviceprofile_list << "#{@org}"
+        serviceprofile_list << "#{serviceprofile.attributes["uuid"]}"
+        extracted_boot_policy_names = "#{serviceprofile.attributes["operBootPolicyName"]}"
+        boot_policy_names = extracted_boot_policy_names.to_s.scan(/\/(boot-policy-\w+)/)
+        boot_policy_names.each do |boot_policies| #Ugly...refactor
+          boot_policies.each do |boot_policy|
+            @boot_policy = boot_policy
+          end
+        end 
+        serviceprofile_list << "#{@boot_policy}"
+        serviceprofile_list << "#{serviceprofile.attributes["operState"]}"
+        serviceprofile_list << begin
+         state = "#{serviceprofile.attributes["assocState"]}"
+         case state
+         when 'associated'
+           ui.color(state, :green)
+         when 'associating'
+           ui.color(state, :yellow)
+         else
+           ui.color(state, :red)
          end
+        end
        end
        puts ui.list(serviceprofile_list, :uneven_columns_across, 6)        
         
