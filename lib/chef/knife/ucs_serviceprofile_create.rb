@@ -34,8 +34,6 @@ class Chef
 
       banner "knife ucs serviceprofile create (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :name,
         :short => "-n NAME",
         :long => "--spname SERVICEPROFILENAME",

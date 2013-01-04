@@ -33,8 +33,6 @@ class Chef
 
       banner "knife ucs pool create (options)"
       
-      attr_accessor :initial_sleep_delay
-      
       option :pooltype,
         :long => "--pool-type POOLTYPE",
         :description => "UCS pool types <mac,uuid,wwpn,wwnn,managementip>",

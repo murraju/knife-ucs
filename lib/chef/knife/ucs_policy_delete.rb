@@ -34,8 +34,6 @@ class Chef
 
       banner "knife ucs policy delete (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :policy,
         :long => "--policy-type POLICY",
         :description => "The policy type <boot,hostfirmware,managementfirmware>",

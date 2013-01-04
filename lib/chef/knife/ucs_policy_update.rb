@@ -33,7 +33,6 @@ class Chef
 
       banner "knife ucs policy update (options)"
 
-      attr_accessor :initial_sleep_delay
 
       option :policy,
         :long => "--policy-type POLICY",

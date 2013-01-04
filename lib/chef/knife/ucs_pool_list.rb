@@ -27,8 +27,6 @@ class Chef
 
       banner "knife ucs pool list (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :type,
         :long => "--pool-type POOLTYPE",
         :description => "The policy type <mac,uuid,wwpn,wwnn>",
