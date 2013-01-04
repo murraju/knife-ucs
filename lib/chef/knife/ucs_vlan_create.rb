@@ -34,8 +34,6 @@ class Chef
 
       banner "knife ucs vlan create (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :vlanid,
         :long => "--vlan-id VLANID",
         :description => "The VLAN ID",

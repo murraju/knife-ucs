@@ -34,8 +34,6 @@ class Chef
 
       banner "knife ucs set (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :config,
         :long => "--config-item CONFIGIETM",
         :description => "The item to configure which includes syslog, ntp, timezone, power, chassis-discovery, local-disk-policy",

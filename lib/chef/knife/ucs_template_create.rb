@@ -34,8 +34,6 @@ class Chef
 
       banner "knife ucs template create (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :template,
         :long => "--template-type TEMPLATE",
         :description => "The template type <vnic,vhba,serviceprofile>",

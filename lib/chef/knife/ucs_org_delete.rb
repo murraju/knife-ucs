@@ -34,8 +34,6 @@ class Chef
 
       banner "knife ucs org delete (options)"
 
-      attr_accessor :initial_sleep_delay
-
       option :org,
         :short => "-O ORG",
         :long => "--org ORG",
